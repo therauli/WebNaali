@@ -1,4 +1,5 @@
 from eventlet import wsgi, websocket
+import server
 import math
 import random
 import eventlet
@@ -20,14 +21,21 @@ ships = dict()
 
 @websocket.WebSocketWSGI
 def hello_world(ws):
+    print 'START', ws
+    myid = random.randrange(1,10000)
     clients.add(ws)
     
     while True:
             
         msg = ws.wait()
         print msg
-        function, params = json.loads(msg)
-        myid = random.randrange(1,10000)
+        if msg is None:
+            break
+        try:
+            function, params = json.loads(msg)
+        except ValueError, error:
+            print error
+
         if function == 'CONNECTED':
             ws.send(json.dumps(['initGraffa', {}]))
             x = random.randrange(10, 180)
@@ -113,9 +121,16 @@ def hello_world(ws):
 
         elif function == 'reboot':
             break
+    clients.remove(ws)
+    print 'END', ws
 
 
 
 
 sock = eventlet.listen(('127.0.0.1', 9999))
-wsgi.server(sock, hello_world)
+s = server.server(sock, hello_world)
+
+while True:
+    
+    s.next()
+    print 'TICK'
