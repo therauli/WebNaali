@@ -57,4 +57,4 @@ function reboot() {
 }
 
 
-setInterval(getUpdate, 500);
+setInterval(getUpdate, 50);
