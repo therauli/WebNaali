@@ -548,7 +548,7 @@ def server(sock, site,
     :param log_format: A python format string that is used as the template to generate log lines.  The following values can be formatted into it: client_ip, date_time, request_line, status_code, body_length, wall_seconds.  Look the default for an example of how to use this.
     """
 
-    sock.settimeout(1)
+    sock.settimeout(None)
     
     serv = Server(sock, sock.getsockname(),
                   site, log,
@@ -582,7 +582,7 @@ def server(sock, site,
         serv.log.write("(%s) wsgi starting up on %s://%s%s/\n" % (
             os.getpid(), scheme, host, port))
         while True:
-            yield
+
             try:
                 try:
                     client_socket = sock.accept()
@@ -603,6 +603,8 @@ def server(sock, site,
             except (KeyboardInterrupt, SystemExit):
                 serv.log.write("wsgi exiting\n")
                 break
+
+            yield
 
     finally:
         try:
