@@ -72,10 +72,10 @@ function drawShips() {
 	ship.y = ship.y + ship.dy;
 	ship.x = ship.x + ship.dx;
 	
-	ctx.translate(ship.x + 25, ship.y + 25);
+	ctx.translate(ship.x + 3, ship.y + 3);
 	ctx.rotate(ship.angle);
 
-	ctx.drawImage(ship.sprite, -25, -25, 50, 50);
+	ctx.drawImage(ship.sprite, -3, -3, 6, 6);
 	
 	ctx.restore();
 	

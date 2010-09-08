@@ -3,7 +3,9 @@
 Stuff to handle WebSocket communication 
 
 */
-var ws = new WebSocket("ws://127.0.0.1:9999");
+
+var ws = new WebSocket("ws://192.168.0.133:9999");
+console.log(ws)
 
 ws.onopen = function() {
     var data = ["CONNECTED", {}];
