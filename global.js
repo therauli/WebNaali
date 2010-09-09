@@ -4,6 +4,7 @@ var canvas;
 var width;
 var height;
 var myid = 1;
+var myavatar;
 var avatars = new Array();
 
 function main() {
@@ -16,10 +17,8 @@ function main() {
 
 function moveTo() {
     console.log(event.clientX+" : "+event.clientY)
-    var avatar = avatars[myid];
-
-    avatar.x = parseInt(event.clientX) - parseInt(canvas.offsetLeft);
-    avatar.y = parseInt(event.clientY) - parseInt(canvas.offsetTop);
+    myavatar.x = parseInt(event.clientX) - parseInt(canvas.offsetLeft);
+    myavatar.y = parseInt(event.clientY) - parseInt(canvas.offsetTop);
 }
 
 function setId() {

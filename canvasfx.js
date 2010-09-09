@@ -33,6 +33,7 @@ function newAvatar() {
 
     avatar.sprite = new Image();
     avatar.sprite.src = "http://upload.wikimedia.org/wikipedia/commons/a/ac/Sprite_bottle.JPG";
+    myavatar = avatar;
     avatars[id] = avatar;
 }
 
