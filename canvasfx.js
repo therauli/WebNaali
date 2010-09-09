@@ -62,8 +62,6 @@ function drawAvatars() {
 	ctx.drawImage(avatar.sprite, -3, -3, 6, 6);
 	
 	ctx.restore();
-	
-
     }
 
 }

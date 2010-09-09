@@ -9,16 +9,25 @@ var avatars = new Array();
 
 function main() {
     canvas = document.getElementById('graffa');
-    canvas.onmousedown = moveTo;
+    canvas.onmousedown = startFollow;
+    canvas.onmouseup = stopFollow;
+
     newAvatar({x: 50, y: 50, id: 1, dx: 0, dy: 0, angle: 0, speed: 0});
     initGraffa();
 
 }
 
-function moveTo() {
-    console.log(event.clientX+" : "+event.clientY)
+function startFollow() {
     myavatar.x = parseInt(event.clientX) - parseInt(canvas.offsetLeft);
     myavatar.y = parseInt(event.clientY) - parseInt(canvas.offsetTop);
+    canvas.onmousemove = function() {
+        myavatar.x = parseInt(event.clientX) - parseInt(canvas.offsetLeft);
+	myavatar.y = parseInt(event.clientY) - parseInt(canvas.offsetTop);
+    };
+}
+
+function stopFollow() {
+    canvas.onmousemove = null;
 }
 
 function setId() {
@@ -39,7 +48,7 @@ function Avatar(id, x, y, dx, dy, angle, speed) {
 }
 
 function newAvatar() {
-    console.log(arguments);
+
     var x = arguments[0]['x'];
     var y = arguments[0]['y'];
     var id = arguments[0]['id'];
@@ -135,34 +144,25 @@ function keyPressHandler() {
     var keyChar = String.fromCharCode(event.charCode);
     keyChar = keyChar.toLowerCase();
 
-    
-    var action;
-
-    var data = getMyData();
-
     switch(keyChar) {
-
+	
     case 'a':
-	action = 'left';
+	myavatar.x -= 1;
 	break;
-
+	
     case 'd':
-	action = 'right';
-	break
+	myavatar.x += 1;
+	break;
 	
     case 'w':
-	action = 'up';
-	break
+	myavatar.y -= 1;
+	break;
 
     case 's':
-	action = 'down';
-	break
+	myavatar.y += 1;
+	break;
     }
 
-
-    if (action) {
-	ws.send(JSON.stringify([action, data]));
-    }
 }
 
 document.onkeypress = keyPressHandler;
