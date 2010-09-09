@@ -1,5 +1,4 @@
 function initGraffa() {
-    var canvas = document.getElementById('graffa');
 
     if (canvas.getContext) {
 	ctx = canvas.getContext('2d');
@@ -9,7 +8,11 @@ function initGraffa() {
 	console.log('Cannot canvas')
     }
     
-    ctx.fillStyle = "#fff";
+    ctx.fillStyle = "#eee";
+    ctx.fillRect(0, 0, width, height);
+    
+    test = new Image();
+    test.src = "http://upload.wikimedia.org/wikipedia/commons/a/ac/Sprite_bottle.JPG";    ctx.drawImage(test, 50,50, 6, 6);
 
     width = parseInt(canvas.width);
     height = parseInt(canvas.height);
@@ -17,9 +20,8 @@ function initGraffa() {
 
 }
 
-function newShip() {
-    console.log(arguments);
-    var x = arguments[0]['x'];
+function newAvatar() {
+ x = arguments[0]['x'];
     var y = arguments[0]['y'];
     var id = arguments[0]['id'];
     var dx = arguments[0]['dx'];
@@ -27,55 +29,36 @@ function newShip() {
     var angle = arguments[0]['angle']
     var speed = arguments[0]['speed']
 
-    var ship = new Ship(id, x, y, dx, dy, angle, speed);
+    var avatar = new Avatar(id, x, y, dx, dy, angle, speed);
 
-    ship.sprite = new Image();
-    ship.sprite.src = "http://upload.wikimedia.org/wikipedia/commons/a/ac/Sprite_bottle.JPG";
-    ships[id] = ship;
+    avatar.sprite = new Image();
+    avatar.sprite.src = "http://upload.wikimedia.org/wikipedia/commons/a/ac/Sprite_bottle.JPG";
+    avatars[id] = avatar;
 }
 
 function stopAll() {
-    for (id in ships) {
-	var ship = ships[id];
-	ship.dx = 0;
-	ship.dy = 0;
+    for (id in avatars) {
+	var avatar = avatars[id];
+	avatar.dx = 0;
+	avatar.dy = 0;
     }
 }
 
-function moveSprite() {
-    var id = arguments[0]['id']
-    ship = ships[id];
-    dy = arguments[0]['dy'] || ship.dy;
-    dx = arguments[0]['dx'] || ship.dx;
-
-    //save context and translate
-    ctx.save();
-    y = y + dy;
-    x = x + dx;
- 
-    ctx.translate(x + 25, y + 25);
-    ctx.rotate(angle);
-    ctx.drawImage(sprite, -25, -25, 50, 50);
-
-    ctx.restore();
-
-}
-
-function drawShips() {
+function drawAvatars() {
     //clear 
     ctx.fillRect(0, 0, width, height);
 
-    for (id in ships) {
-	var ship = ships[id];
+    for (id in avatars) {
+	var avatar = avatars[id];
 
 	ctx.save();
-	ship.y = ship.y + ship.dy;
-	ship.x = ship.x + ship.dx;
+	avatar.y = avatar.y + avatar.dy;
+	avatar.x = avatar.x + avatar.dx;
 	
-	ctx.translate(ship.x + 3, ship.y + 3);
-	ctx.rotate(ship.angle);
+	ctx.translate(avatar.x + 3, avatar.y + 3);
+	ctx.rotate(avatar.angle);
 
-	ctx.drawImage(ship.sprite, -3, -3, 6, 6);
+	ctx.drawImage(avatar.sprite, -3, -3, 6, 6);
 	
 	ctx.restore();
 	
@@ -84,4 +67,4 @@ function drawShips() {
 
 }
 
-
+setInterval(drawAvatars, 50);

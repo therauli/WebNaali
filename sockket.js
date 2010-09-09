@@ -4,9 +4,10 @@ Stuff to handle WebSocket communication
 
 */
 
-var ws = new WebSocket("ws://192.168.0.133:9999");
-console.log(ws)
-
+//var ws = new WebSocket("ws://192.168.0.133:9999");
+//console.log(ws)
+var ws = {};
+ws.send=function(){};
 ws.onopen = function() {
     var data = ["CONNECTED", {}];
     ws.send(JSON.stringify(data));
@@ -46,11 +47,11 @@ function logMessage() {
 }
 
 function getUpdate() {
-    //var ship = ships[myid];
-    //console.log(ship);
+    //var avatar = avatars[myid];
+    //console.log(avatar);
     var data = ["giev update", getAllData()]
     ws.send(JSON.stringify(data))
-    drawShips()
+    drawAvatars()
 }
 
 function reboot() {
@@ -59,4 +60,4 @@ function reboot() {
 }
 
 
-setInterval(getUpdate, 50);
+//setInterval(getUpdate, 50);
