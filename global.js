@@ -18,8 +18,8 @@ function moveTo() {
     console.log(event.clientX+" : "+event.clientY)
     var avatar = avatars[myid];
 
-    avatar.x = parseInt(event.clientX);
-    avatar.y = parseInt(event.clientY);
+    avatar.x = parseInt(event.clientX) - parseInt(canvas.offsetLeft);
+    avatar.y = parseInt(event.clientY) - parseInt(canvas.offsetTop);
 }
 
 function setId() {
@@ -132,3 +132,38 @@ function getData(id) {
     return data;
 }
 
+function keyPressHandler() {
+    var keyChar = String.fromCharCode(event.charCode);
+    keyChar = keyChar.toLowerCase();
+
+    
+    var action;
+
+    var data = getMyData();
+
+    switch(keyChar) {
+
+    case 'a':
+	action = 'left';
+	break;
+
+    case 'd':
+	action = 'right';
+	break
+	
+    case 'w':
+	action = 'up';
+	break
+
+    case 's':
+	action = 'down';
+	break
+    }
+
+
+    if (action) {
+	ws.send(JSON.stringify([action, data]));
+    }
+}
+
+document.onkeypress = keyPressHandler;
