@@ -3,8 +3,7 @@ var ctx;
 var canvas;
 var width;
 var height;
-var myid = 1;
-var myavatar;
+var myid;
 var avatars = new Array();
 
 function main() {
@@ -12,17 +11,14 @@ function main() {
     canvas.onmousedown = startFollow;
     canvas.onmouseup = stopFollow;
 
-    newAvatar({x: 50, y: 50, id: 1, dx: 0, dy: 0, angle: 0, speed: 0});
-    initGraffa();
-
 }
 
 function startFollow() {
-    myavatar.x = parseInt(event.clientX) - parseInt(canvas.offsetLeft);
-    myavatar.y = parseInt(event.clientY) - parseInt(canvas.offsetTop);
+    avatars[myid].x = parseInt(event.clientX) - parseInt(canvas.offsetLeft);
+    avatars[myid].y = parseInt(event.clientY) - parseInt(canvas.offsetTop);
     canvas.onmousemove = function() {
-        myavatar.x = parseInt(event.clientX) - parseInt(canvas.offsetLeft);
-	myavatar.y = parseInt(event.clientY) - parseInt(canvas.offsetTop);
+        avatars[myid].x = parseInt(event.clientX) - parseInt(canvas.offsetLeft);
+	avatars[myid].y = parseInt(event.clientY) - parseInt(canvas.offsetTop);
     };
 }
 
@@ -147,19 +143,19 @@ function keyPressHandler() {
     switch(keyChar) {
 	
     case 'a':
-	myavatar.x -= 1;
+	avatars[myid].x -= 1;
 	break;
 	
     case 'd':
-	myavatar.x += 1;
+	avatars[myid].x += 1;
 	break;
 	
     case 'w':
-	myavatar.y -= 1;
+	avatars[myid].y -= 1;
 	break;
 
     case 's':
-	myavatar.y += 1;
+	avatars[myid].y += 1;
 	break;
     }
 

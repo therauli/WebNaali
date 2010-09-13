@@ -4,24 +4,24 @@ function initGraffa() {
 	ctx = canvas.getContext('2d');
 	// drawing code here
     } else {
-	errorMsg('Cannot canvas')
-	console.log('Cannot canvas')
+	errorMsg('Cannot canvas');
+	console.log('Cannot canvas');
     }
     
     ctx.fillStyle = "#eee";
     ctx.fillRect(0, 0, width, height);
     
     test = new Image();
-    test.src = "http://upload.wikimedia.org/wikipedia/commons/a/ac/Sprite_bottle.JPG";    ctx.drawImage(test, 50,50, 6, 6);
-
+    test.src = "http://upload.wikimedia.org/wikipedia/commons/a/ac/Sprite_bottle.JPG";    
+    ctx.drawImage(test, 50,50, 6, 6);
     width = parseInt(canvas.width);
     height = parseInt(canvas.height);
-    sendSize(width, height)
+    sendSize(width, height);
 
 }
 
 function newAvatar() {
- x = arguments[0]['x'];
+    var x = arguments[0]['x'];
     var y = arguments[0]['y'];
     var id = arguments[0]['id'];
     var dx = arguments[0]['dx'];
@@ -33,7 +33,6 @@ function newAvatar() {
 
     avatar.sprite = new Image();
     avatar.sprite.src = "http://upload.wikimedia.org/wikipedia/commons/a/ac/Sprite_bottle.JPG";
-    myavatar = avatar;
     avatars[id] = avatar;
 }
 
@@ -66,4 +65,3 @@ function drawAvatars() {
 
 }
 
-setInterval(drawAvatars, 50);
