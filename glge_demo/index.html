@@ -56,7 +56,7 @@ doc.onLoad=function(){
 	if(mouseovercanvas){
 	    var mousepos=mouse.getMousePosition();
 	    mousepos.x=mousepos.x-document.getElementById("container").offsetLeft;
-	    mousepos.y=mousepos.y-document.getElementById("container").offsetTop;
+	    mousepos.y=mousepos.y-document.getElementById("container").offsetTop;	
 	    var camera=gameScene.camera;
 	    camerarot=camera.getRotation();
 	    inc=(mousepos.y-(document.getElementById('canvas').offsetHeight/2))/500;

@@ -5,7 +5,6 @@ Stuff to handle WebSocket communication
 */
 
 var ws = new WebSocket("ws://127.0.0.1:9999");
-console.log(ws);
 
 ws.onopen = function() {
     var data = ["CONNECTED", {}];
@@ -45,10 +44,12 @@ function logMessage() {
 }
 
 function getUpdate() {
- 
-    var data = ["giev update", getMyData()];
-    ws.send(JSON.stringify(data))
-    drawAvatars()
+    /* Don't ask for update if server hasn't set the id yet */
+    if (myid) {
+	var data = ["giev update", getMyData()];
+	ws.send(JSON.stringify(data))
+	drawAvatars()
+    }
 }
 
 function reboot() {

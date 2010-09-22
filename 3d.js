@@ -9,25 +9,25 @@ window.onload = function() {
     renderer = new GLGE.Renderer(canvas);
     scene = new GLGE.Scene();
 
-    scene.setAmbientColor('#666');
+    var keys = new GLGE.KeyInput();
+
+    scene.setAmbientColor('#fff');
     
     renderer.setScene(scene);
 
     var camera = new GLGE.Camera();
 
-    camera.setLoc("1", "20", "8");
+    camera.setLoc("-5", "-5", "3");
     camera.setRotOrder(GLGE.ROT_XZY);
-    camera.setRot("1.56", "3.141", "0");
+    camera.setRot("0", "0", "0");
     camera.setType(GLGE.C_ORTHO);
 
     scene.setCamera(camera);
 
-    
-
     var d = new GLGE.Collada();
     d.setDocument("glge_demo/duck.dae");
-    d.setScale(0.05);
-    d.setLocY("-15");
+    d.setScale(0.01);
+    d.setLoc("0", "0", "0");
     d.setRotY(1.57);
     d.setRotX(1.57);
     //For some reason docURL is not set correctly. This is a
@@ -35,13 +35,35 @@ window.onload = function() {
     d.docURL="http://localhost:8000/WebNaali/glge_demo/duck.dae";
     scene.addObject(d);
     
-    function render() {
-	renderer.render()
+    
+    function checkkeys() {
+	
 
     }
 
+    function mouselook() {
+	if (mouseonvercanvas) {
+	    var mousepos=mouse.getMousePosition();
+	    mousepos.x=mousepos.x-document.getElementById("container").offsetLeft;
+	    mousepos.y=mousepos.y-document.getElementById("container").offsetTop;
+	    //...
+
+	}
+    }
+
+
+    function render() {
+	renderer.render();
+	document.getElementById("info").innerHTML="Camera:" + camera.getLocX() +", " + camera.getLocY() + ", " + camera.getLocZ() + " : " + camera.getRotX() + ", " + camera.getRotY() + ", " + camera.getRotZ();
+	checkkeys();
+
+    }
+
+
+    document.getElementById("canvas").onmouseover=function(e){mouseovercanvas=true;}
+    document.getElementById("canvas").onmouseout=function(e){mouseovercanvas=false;}
+    
     setInterval(render, 1);
-    renderer.render()
 
 }
 

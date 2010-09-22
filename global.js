@@ -14,11 +14,11 @@ function main() {
 }
 
 function startFollow() {
-    avatars[myid].x = parseInt(event.clientX) - parseInt(canvas.offsetLeft);
-    avatars[myid].y = parseInt(event.clientY) - parseInt(canvas.offsetTop);
+    avatars[myid].position[0] = parseInt(event.clientX) - parseInt(canvas.offsetLeft);
+    avatars[myid].position[1] = parseInt(event.clientY) - parseInt(canvas.offsetTop);
     canvas.onmousemove = function() {
-        avatars[myid].x = parseInt(event.clientX) - parseInt(canvas.offsetLeft);
-	avatars[myid].y = parseInt(event.clientY) - parseInt(canvas.offsetTop);
+        avatars[myid].position[0] = parseInt(event.clientX) - parseInt(canvas.offsetLeft);
+	avatars[myid].position[1] = parseInt(event.clientY) - parseInt(canvas.offsetTop);
     };
 }
 
@@ -30,70 +30,43 @@ function setId() {
     myid = arguments[0]['id'];
 }
 
-function Avatar(id, x, y, dx, dy, angle, speed) {
+function Avatar(id, position, orientation) {
     this.id = id;
-    this.x = x;
-    this.y = y;
-    this.dx = dx;
-    this.dy = dy;
-    this.angle = angle;
+
+    this.position = position;
+    this.orientation = orientation;
+
     this.url =  "http://upload.wikimedia.org/wikipedia/commons/a/ac/Sprite_bottle.JPG";
     this.sprite = undefined;
-    this.speed = speed;
-
 }
 
 function newAvatar() {
+    var args = arguments[0];
 
-    var x = arguments[0]['x'];
-    var y = arguments[0]['y'];
-    var id = arguments[0]['id'];
-    var dx = arguments[0]['dx'];
-    var dy = arguments[0]['dy'];
-    var angle = arguments[0]['angle']
-    var speed = arguments[0]['speed']
+    var id = args['id'];
 
-    var avatar = new Avatar(id, x, y, dx, dy, angle, speed);
+    var position = args['position'];
+    var orientation = args['orientation'];
+    
+    var avatar = new Avatar(id, position, orientation);
 
     avatar.sprite = new Image();
     avatar.sprite.src = "http://upload.wikimedia.org/wikipedia/commons/a/ac/Sprite_bottle.JPG";
+
     avatars[id] = avatar;
 }
-
-function stopAll() {
-    for (id in avatars) {
-	var avatar = avatars[id];
-	avatar.dx = 0;
-	avatar.dy = 0;
-    }
-}
-
 
 function updateAvatar() {
     var args = arguments[0];
     var id = args['id'];
     var avatar = avatars[id];
     
-    for (var foo in avatars) {
-	console.log(foo);
-    }
-
     if (avatar == undefined) {
-	var x = args['x'];
-	var y = args['y'];
-	var dx = args['dx'];
-	var dy = args['dy'];
-	var angle = args['angle'];
-	var speed = args['speed'];
-	newAvatar({id: id, x: x, y: y, dx: dx, dy: dy, angle: angle, speed: speed});
-
+	/* If there is no avatar, create it*/
+	newAvatar(arguments[0]);
     } else {
-	avatar.x = args['x'];
-	avatar.y = args['y'];
-	avatar.dx = args['dx'];
-	avatar.dy = args['dy'];
-	avatar.angle = args['angle'];
-	avatar.speed = args['speed'];
+	avatar.position = args['position'];
+	avatar.orientation = args['orientation'];
     }
 
     drawAvatars();
@@ -102,15 +75,7 @@ function updateAvatar() {
 
 function getMyData() {
     var avatar = avatars[myid];
-    var data = {
-	id: myid,
-	x: avatar.x,
-	y: avatar.y,
-	dx: avatar.dx,
-	dy: avatar.dy,
-	angle: avatar.angle,
-	speed: avatar.speed,
-    };
+    var data = {id: myid, position: avatar.position, orientation: avatar.orientation};
     return data;
 }
 
@@ -119,7 +84,6 @@ function getAllData() {
     for (id in avatars) {
 	data[id] = getData(id);
     }
-    
     return data;
 
 }
@@ -143,19 +107,19 @@ function keyPressHandler() {
     switch(keyChar) {
 	
     case 'a':
-	avatars[myid].x -= 1;
+	avatars[myid].position[0] -= 1;
 	break;
 	
     case 'd':
-	avatars[myid].x += 1;
+	avatars[myid].position[0] += 1;
 	break;
 	
     case 'w':
-	avatars[myid].y -= 1;
+	avatars[myid].position[1] -= 1;
 	break;
 
     case 's':
-	avatars[myid].y += 1;
+	avatars[myid].position[1] += 1;
 	break;
     }
 
