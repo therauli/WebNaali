@@ -33,10 +33,17 @@ function Avatar(id, position, orientation) {
 
     this.position = position;
     this.orientation = orientation;
-
-    /* TODO move this to 2d.js */
+    
     this.url =  "http://upload.wikimedia.org/wikipedia/commons/a/ac/Sprite_bottle.JPG";
     this.sprite = undefined;
+
+    this.getLocation = function() {
+	return this.position;
+    }
+    
+    this.getOrientation = function() {
+	return this.orientation;
+    }
 }
 
 function newAvatar() {
@@ -117,3 +124,6 @@ function keyPressHandler() {
     }
 
 }
+
+
+getPosition

@@ -6,8 +6,8 @@ var canvas;
 var width;
 var height;
 var myid;
-var avatars = new Array();
 
+var avatars = new Array();
 
 function setId() {
     myid = arguments[0]['id'];
@@ -26,33 +26,13 @@ function updateAvatar() {
     }
 
     drawAvatars();
-
 }
 
 function getMyData() {
     var avatar = avatars[myid];
-    var data = {id: myid, position: avatar.position, orientation: avatar.orientation};
+    var position = avatar.getLocation();
+    var orientation = avatar.getOrientation();
+    
+    var data = {id: myid, position: position, orientation: orientation};
     return data;
 }
-
-function getAllData() {
-    var data = {};
-    for (id in avatars) {
-	data[id] = getData(id);
-    }
-    return data;
-
-}
-
-function getData(id) {
-    var data = {};
-    var avatar = avatars[id];
-    for (item in avatar) {
-	if ((item == 'sprite') || (item == 'url')) {
-	    continue;
-	}
-	data[item] = avatar[item];
-    }
-    return data;
-}
-

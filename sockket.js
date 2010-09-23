@@ -47,8 +47,8 @@ function getUpdate() {
     /* Don't ask for update if server hasn't set the id yet */
     if (myid) {
 	var data = ["giev update", getMyData()];
-	ws.send(JSON.stringify(data))
-	drawAvatars()
+	ws.send(JSON.stringify(data));
+	drawAvatars();
     }
 }
 
