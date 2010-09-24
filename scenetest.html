@@ -1,0 +1,138 @@
+<html> 
+<head> 
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
+<title>Scenetest</title> 
+
+<!-- GLGE stuff --> 
+<script type="text/javascript" src="glge/glge_math.js"></script>
+<script type="text/javascript" src="glge/glge.js"></script>
+<script type="text/javascript" src="glge/glge_input.js"></script>
+<script type="text/javascript" src="glge/glge_collada.js"></script>
+
+
+<!-- code for 3d stuff -->
+<script type="text/javascript">
+
+var scene;
+var renderer;
+var camera;
+var lobby;
+
+window.onload = function() {
+    canvas = document.getElementById('graffa');
+    
+    renderer = new GLGE.Renderer(canvas);   
+    scene = new GLGE.Scene();
+    
+    var keys = new GLGE.KeyInput();
+
+
+    scene.setAmbientColor('#fff');
+
+    renderer.setScene(scene);
+
+    camera = new GLGE.Camera();
+    camera.setLoc("127", "127", "15");
+    camera.setRotOrder(GLGE.ROT_XZY);
+    camera.setType(GLGE.C_PERSPECTIVE);
+    camera.setRot(1.57, 3.141, 0);
+
+    scene.setCamera(camera);
+    
+
+    lobby = new GLGE.Collada();
+    lobby.setDocument("aula.dae");
+    lobby.setLoc(127, 127, 0);
+
+    scene.addObject(lobby);
+
+    function checkkeys() {
+	var camerapos = camera.getPosition();
+	var camerarot = camera.getRotation();
+	var mat = camera.getRotMatrix();
+	
+	var trans = GLGE.mulMat4Vec4(mat, [0, 0, -1, 1]);
+	var magnitude = Math.pow(Math.pow(trans[0], 2) + Math.pow(trans[1], 2), 0,5);
+
+	trans[0] = trans[0] / magnitude;
+	trans[1] = trans[1] / magnitude;
+
+	var yinc = 0;
+	var xinc = 0;
+	var zinc = 0;
+	
+	if (keys.isKeyPressed(GLGE.KI_PAGE_UP)) {
+	    console.log(camerapos.z);
+	    zinc = 1;
+	}
+	if (keys.isKeyPressed(GLGE.KI_PAGE_DOWN)) {
+	    zinc = -1;
+	}
+	if (keys.isKeyPressed(GLGE.KI_W) || keys.isKeyPressed(GLGE.KI_UP_ARROW)) {
+	    xinc = xinc + parseFloat(trans[0]);
+	    yinc = yinc + parseFloat(trans[1]);
+	}
+	if (keys.isKeyPressed(GLGE.KI_S) || keys.isKeyPressed(GLGE.KI_DOWN_ARROW)) {
+	    xinc = xinc - parseFloat(trans[0]);
+	    yinc = yinc - parseFloat(trans[1]);
+	}
+	if (keys.isKeyPressed(GLGE.KI_A)) {
+	    xinc = xinc - parseFloat(trans[1]);
+	    yinc = yinc + parseFloat(trans[0]);
+	}
+	if (keys.isKeyPressed(GLGE.KI_D)) {
+	    xinc = xinc + parseFloat(trans[1]);
+	    yinc = yinc - parseFloat(trans[0]);
+	}
+	if (keys.isKeyPressed(GLGE.KI_LEFT_ARROW)) {
+	    camera.setRotY(camera.getRotY() + 0.1);
+	    
+	}
+	if (keys.isKeyPressed(GLGE.KI_RIGHT_ARROW)) {
+	    camera.setRotY(camera.getRotY() - 0.1);
+	}
+
+	if (xinc != 0 || yinc != 0 || zinc != 0) {
+	    camera.setLocX(camerapos.x + xinc);
+	    camera.setLocY(camerapos.y + yinc);
+	    camera.setLocZ(camerapos.z + zinc);
+	}
+	
+	
+    }
+		   
+
+    function render() {
+	document.getElementById("info").innerHTML="Camera:" + camera.getLocX() +", " + camera.getLocY() + ", " + camera.getLocZ() + " : " + camera.getRotX() + ", " + camera.getRotY() + ", " + camera.getRotZ();
+
+	checkkeys();
+	renderer.render();
+    }
+    
+    setInterval(render, 1);
+
+}
+
+</script>
+
+
+</head>
+
+<body>
+<h1>Hell yeah!</h1>
+
+<div id="container">
+  <canvas id="graffa" width="510" height="510">
+    This text is displayed if your browser does not support HTML5 Canvas.
+  </canvas>
+  <div id="info">
+    
+  </div>
+</div>
+<p id="buttons">
+Kek plop
+<button onclick='reboot()'>Reboot</button>
+</p>
+
+</body>
+</html>
