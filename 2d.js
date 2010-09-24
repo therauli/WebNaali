@@ -34,7 +34,7 @@ function Avatar(id, position, orientation) {
     this.position = position;
     this.orientation = orientation;
     
-    this.url =  "http://upload.wikimedia.org/wikipedia/commons/a/ac/Sprite_bottle.JPG";
+    this.url = "http://upload.wikimedia.org/wikipedia/commons/a/ac/Sprite_bottle.JPG";
     this.sprite = undefined;
 
     this.getLocation = function() {
@@ -124,6 +124,3 @@ function keyPressHandler() {
     }
 
 }
-
-
-getPosition
