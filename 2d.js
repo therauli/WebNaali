@@ -1,6 +1,9 @@
+
 /* 
    2d.js - Draws avatars in 2d canvas and handles input for 2d, you
-know keyb and mouse and stuff
+know keyb and mouse and stuff. It draws the coorinates of every avatar
+seen in naali.
+
 */
 
 var ctx;
@@ -77,10 +80,9 @@ function drawAvatars() {
 
 	ctx.save();
 	
-	ctx.translate(avatar.position[0] + 3, avatar.position[1] + 3);
+	ctx.translate(avatar.position[0] + 3, (height - avatar.position[1]) + 3);
 
-	/* TODO: Make it rotate! */
-	//ctx.rotate(avatar.roll);
+	ctx.rotate(avatar.getOrientation()[2]);
 	ctx.drawImage(avatar.sprite, -3, -3, 6, 6);
 	
 	ctx.restore();
@@ -89,10 +91,10 @@ function drawAvatars() {
 
 function startFollow() {
     avatars[myid].position[0] = parseInt(event.clientX) - parseInt(canvas.offsetLeft);
-    avatars[myid].position[1] = parseInt(event.clientY) - parseInt(canvas.offsetTop);
+    avatars[myid].position[1] = height - (parseInt(event.clientY) - parseInt(canvas.offsetTop));
     canvas.onmousemove = function() {
         avatars[myid].position[0] = parseInt(event.clientX) - parseInt(canvas.offsetLeft);
-	avatars[myid].position[1] = parseInt(event.clientY) - parseInt(canvas.offsetTop);
+	avatars[myid].position[1] = height - (parseInt(event.clientY) - parseInt(canvas.offsetTop));
     };
 }
 
@@ -115,11 +117,11 @@ function keyPressHandler() {
 	break;
 	
     case 'w':
-	avatars[myid].position[1] -= 1;
+	avatars[myid].position[1] += 1;
 	break;
 
     case 's':
-	avatars[myid].position[1] += 1;
+	avatars[myid].position[1] -= 1;
 	break;
     }
 
