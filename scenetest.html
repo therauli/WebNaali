@@ -1,5 +1,14 @@
 <html> 
 <head> 
+<!--
+    scenetest.html - for loading and browsing a scene
+
+    scenetest loads a collada scene. 
+
+    You can "walk" in the scene using wasd and arrow keys,
+
+-->
+
 <meta http-equiv="content-type" content="text/html; charset=UTF-8"> 
 <title>Scenetest</title> 
 
@@ -41,7 +50,8 @@ window.onload = function() {
     
 
     lobby = new GLGE.Collada();
-    lobby.setDocument("aula.dae");
+    lobby.setDocument("http://localhost:8000/WebNaali/aula/aula_v7b.dae");
+
     lobby.setLoc(127, 127, 0);
 
     scene.addObject(lobby);
@@ -101,13 +111,26 @@ window.onload = function() {
 	
     }
 		   
-
+    var lasttime=0;
+    var frameratebuffer=60;
+    start=parseInt(new Date().getTime());
+    var now;
+    
     function render() {
-	document.getElementById("info").innerHTML="Camera:" + camera.getLocX() +", " + camera.getLocY() + ", " + camera.getLocZ() + " : " + camera.getRotX() + ", " + camera.getRotY() + ", " + camera.getRotZ();
+	now=parseInt(new Date().getTime());
+	frameratebuffer=Math.round(((frameratebuffer*9)+1000/(now-lasttime))/10);
+	
+	document.getElementById("info").innerHTML="fps: " + frameratebuffer +', ' +"Camera:" + camera.getLocX() +", " + camera.getLocY() + ", " + camera.getLocZ() + " : " + camera.getRotX() + ", " + camera.getRotY() + ", " + camera.getRotZ();
+
 
 	checkkeys();
 	renderer.render();
+	lasttime=now;
+	
+
     }
+
+
     
     setInterval(render, 1);
 
