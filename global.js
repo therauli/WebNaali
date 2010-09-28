@@ -6,6 +6,7 @@ var canvas;
 var width;
 var height;
 var myid;
+var timerid;
 
 var avatars = new Array();
 

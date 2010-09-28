@@ -54,7 +54,8 @@ function getUpdate() {
 
 function reboot() {
     var data = ['reboot', {}];
+    clearInterval(timerid);
     ws.send(JSON.stringify(data));
 }
 
-setInterval(getUpdate, 50);
+timerid = setInterval(getUpdate, 50);

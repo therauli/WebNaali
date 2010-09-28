@@ -26,6 +26,7 @@ var scene;
 var renderer;
 var camera;
 var lobby;
+var timerId;
 
 window.onload = function() {
     canvas = document.getElementById('graffa');
@@ -121,19 +122,12 @@ window.onload = function() {
 	frameratebuffer=Math.round(((frameratebuffer*9)+1000/(now-lasttime))/10);
 	
 	document.getElementById("info").innerHTML="fps: " + frameratebuffer +', ' +"Camera:" + camera.getLocX() +", " + camera.getLocY() + ", " + camera.getLocZ() + " : " + camera.getRotX() + ", " + camera.getRotY() + ", " + camera.getRotZ();
-
-
 	checkkeys();
 	renderer.render();
 	lasttime=now;
-	
-
     }
-
-
     
-    setInterval(render, 1);
-
+    timerId = setInterval(render, 1);
 }
 
 </script>
@@ -154,7 +148,7 @@ window.onload = function() {
 </div>
 <p id="buttons">
 Kek plop
-<button onclick='reboot()'>Reboot</button>
+<button onclick='clearInterval(timerId)'>Stop rendering</button>
 </p>
 
 </body>
