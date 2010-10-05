@@ -85,7 +85,6 @@ function checkkeys() {
     var rot = 0;
     
     if (keys.isKeyPressed(GLGE.KI_PAGE_UP)) {
-	console.log(camerapos.z);
 	zinc = 1;
     }
     if (keys.isKeyPressed(GLGE.KI_PAGE_DOWN)) {
@@ -128,7 +127,7 @@ function checkkeys() {
 
     // make wclients precense move also
     var avatar = avatars[myid];
-    avatar.setLoc(camerapos.x, camerapos.y, camerapos.z+0.5);
+    avatar.setLoc(camerapos.x, camerapos.y, camerapos.z+1);
     avatar.setRotZ(avatar.getOrientation()[2] + rot);
 	
 }
