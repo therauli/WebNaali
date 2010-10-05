@@ -27,15 +27,37 @@ var renderer;
 var camera;
 var lobby;
 var timerId;
+var mouseovercanvas;
 
 window.onload = function() {
-    canvas = document.getElementById('graffa');
-    
+    var canvas = document.getElementById('graffa');
+    var hoverobject;
+
+    // canvas.onmousedown = function(event) {
+    // 	scene.pick(event.clientX - this.parentNode.offsetLeft,
+    // 		   event.clientY - this.parentNode.offsetTop);
+	
+    // }
+
+    canvas.onmouseover = function(event) {
+	mouseovercanvas = true;
+    }
+
+    canvas.onmousemove = function(event) {
+	mouseovercanvas = true;
+    }
+
+    canvas.onmoiseout = function(event) {
+	mouseovercanvas = false;
+
+    }
+
     renderer = new GLGE.Renderer(canvas);   
     scene = new GLGE.Scene();
     
     var keys = new GLGE.KeyInput();
-
+    var mouse = new GLGE.MouseInput(canvas);
+    
 
     scene.setAmbientColor('#fff');
 
@@ -51,11 +73,38 @@ window.onload = function() {
     
 
     lobby = new GLGE.Collada();
-    lobby.setDocument("http://localhost:8000/WebNaali/aula/aula_v7b.dae");
+    lobby.setId("aula");
+    lobby.setDocument("http://localhost:8000/WebNaali/aula/aula.dae");
 
     lobby.setLoc(127, 127, 0);
 
+    duck = new GLGE.Collada();
+    duck.setDocument("http://localhost:8000/WebNaali/ankka.dae");
+    duck.setLoc(127, 117, 15);
+
     scene.addObject(lobby);
+    scene.addObject(duck);
+
+    function checkmouse() {
+	if (mouseovercanvas && mouse.isButtonDown(GLGE.MI_LEFT)) {
+	    var mouseposition = mouse.getMousePosition();
+	    mouseposition.x -= document.getElementById("container").offsetLeft;
+	    mouseposition.y -= document.getElementById("container").offsetTop;
+	    
+	    if (mouseposition.x && mouseposition.y) {
+		object = scene.pick(mouseposition.x, mouseposition.y).object
+		if (!object) {
+		    if (hoverobject) {
+			hoverobject.setScale(1);
+		    }
+		} else {
+		    object.setScale(1.2);
+		    hoverobject = object;
+		}
+
+	    }
+	}
+    }
 
     function checkkeys() {
 	var camerapos = camera.getPosition();
@@ -73,7 +122,6 @@ window.onload = function() {
 	var zinc = 0;
 	
 	if (keys.isKeyPressed(GLGE.KI_PAGE_UP)) {
-	    console.log(camerapos.z);
 	    zinc = 1;
 	}
 	if (keys.isKeyPressed(GLGE.KI_PAGE_DOWN)) {
@@ -109,7 +157,6 @@ window.onload = function() {
 	    camera.setLocZ(camerapos.z + zinc);
 	}
 	
-	
     }
 		   
     var lasttime=0;
@@ -122,6 +169,7 @@ window.onload = function() {
 	frameratebuffer=Math.round(((frameratebuffer*9)+1000/(now-lasttime))/10);
 	
 	document.getElementById("info").innerHTML="fps: " + frameratebuffer +', ' +"Camera:" + camera.getLocX() +", " + camera.getLocY() + ", " + camera.getLocZ() + " : " + camera.getRotX() + ", " + camera.getRotY() + ", " + camera.getRotZ();
+	checkmouse();
 	checkkeys();
 	renderer.render();
 	lasttime=now;
@@ -141,8 +189,8 @@ window.onload = function() {
 <div id="container">
   <canvas id="graffa" width="510" height="510">
     This text is displayed if your browser does not support HTML5 Canvas.
-  </canvas>
-  <div id="info">
+    </canvas>
+    <div id="info">
     
   </div>
 </div>
