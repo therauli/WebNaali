@@ -31,9 +31,22 @@ function parseMessage(message) {
     var message_json = JSON.parse(message);
     var func = message_json[0];
     var params = message_json[1];
-
     eval(func)(params);
 }
+
+function addObject(entxml_string) {
+    var entxml = (new DOMParser()).parseFromString(entxml_string, "text/xml");
+    for (c in entxml.getElementsByTagName("component")) {
+        for (a in c.getElementsByTagName("attribute")) {
+            n = a.getAttribute("name");
+            v = a.getAttribute("value");
+            if (n == "js_code") {
+                eval(v);
+            }
+        }
+    }
+}
+
 
 function errorMsg(message) {
     ws.send('["ERROR", '+ message +']');
@@ -52,8 +65,15 @@ function getUpdate() {
     }
 }
 
+
 function reboot() {
     var data = ['reboot', {}];
+    clearInterval(timerid);
+    ws.send(JSON.stringify(data));
+}
+
+function addObject() {
+    var data = ['addObject', {}];
     clearInterval(timerid);
     ws.send(JSON.stringify(data));
 }
