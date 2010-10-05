@@ -74,7 +74,6 @@ function reboot() {
 
 function addObject() {
     var data = ['addObject', {}];
-    clearInterval(timerid);
     ws.send(JSON.stringify(data));
 }
 
