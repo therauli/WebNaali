@@ -6,14 +6,38 @@ var scene;
 var renderer;
 var camera;
 var keys;
+var mouse;
+var hoverobject;
+var mouseovercanvas;
+var lasttime=0;
+var frameratebuffer=60;
+start=parseInt(new Date().getTime());
+var now;
+
+
+
 
 function initGraffa() {
     canvas = document.getElementById('graffa');
-    
+
+    canvas.onmouseover = function(event) {
+	mouseovercanvas = true;
+    }
+
+    canvas.onmousemove = function(event) {
+	mouseovercanvas = true;
+    }
+
+    canvas.onmoiseout = function(event) {
+	mouseovercanvas = false;
+
+    }
+
     renderer = new GLGE.Renderer(canvas);
     scene = new GLGE.Scene();
 
     keys = new GLGE.KeyInput();
+    mouse = new GLGE.MouseInput(canvas);
 
     scene.setAmbientColor('#fff');
     
@@ -33,12 +57,19 @@ function initGraffa() {
 function render() {
     renderer.render();
     checkkeys();
+    checkmouse();
+
+    now=parseInt(new Date().getTime());
+    frameratebuffer=Math.round(((frameratebuffer*9)+1000/(now-lasttime))/10);
+    document.getElementById("fps").innerHTML = "FPS: " + frameratebuffer;
+
     document.getElementById("info").innerHTML="Camera:" + camera.getLocX() +", " + camera.getLocY() + ", " + camera.getLocZ() + " : " + camera.getRotX() + ", " + camera.getRotY() + ", " + camera.getRotZ();
 
+
+    lasttime = now;
 }
 
 function newAvatar() {
-    console.log(arguments);
     var args = arguments[0];
 
     var id = args['id'];
@@ -65,6 +96,15 @@ function newAvatar() {
 
     avatars[id] = avatar;
     
+}
+
+function createObject(position, orientation) {
+    var object = new GLGE.Collada();
+    object.setDocument("http://localhost:8000/WebNaali/seymourplane_triangulate.dae");
+    object.setScale(0.1);
+    object.setLoc(position[0], position[1], position[2]);
+    object.setRot(orientation[0], orientation[1], orientation[2]);
+    scene.addObject(object);
 }
 
 function checkkeys() {
@@ -124,13 +164,39 @@ function checkkeys() {
 	camera.setRotY(camera.getRotY() + rot);
     }
 
-
     // make wclients precense move also
     var avatar = avatars[myid];
     avatar.setLoc(camerapos.x, camerapos.y, camerapos.z+1);
     avatar.setRotZ(avatar.getOrientation()[2] + rot);
 	
 }
+
+function checkmouse() {
+    if (mouseovercanvas && mouse.isButtonDown(GLGE.MI_LEFT)) {
+	var mouseposition = mouse.getMousePosition();
+	mouseposition.x -= document.getElementById("container").offsetLeft;
+	mouseposition.y -= document.getElementById("container").offsetTop;
+	
+	if (mouseposition.x && mouseposition.y) {
+	    object = scene.pick(mouseposition.x, mouseposition.y).object
+	    if (!object) {
+		if (hoverobject) {
+		    hoverobject.setScale(1);
+		}
+	    } else {
+		object.setScale(1.2);
+		for (obj in objects) {
+		    if (objects[obj] === 1) {
+			console.log("Do the " + object);
+		    }
+		}
+		hoverobject = object;
+	    }
+	    
+	}
+    }
+}
+
 
 function setAvatarPosition(avatar, position, orientation) {
     avatar.setLocX(position[0]);
@@ -141,7 +207,6 @@ function setAvatarPosition(avatar, position, orientation) {
     avatar.setRotY(orientation[1]);
     avatar.setRotZ(orientation[2]);
 
-    console.log(avatar, position, orientation);
 }
 
 

@@ -34,18 +34,31 @@ function parseMessage(message) {
     eval(func)(params);
 }
 
-function addObject(entxml_string) {
-    var entxml = (new DOMParser()).parseFromString(entxml_string, "text/xml");
-    for (c in entxml.getElementsByTagName("component")) {
-        for (a in c.getElementsByTagName("attribute")) {
-            n = a.getAttribute("name");
-            v = a.getAttribute("value");
-            if (n == "js_code") {
-                eval(v);
-            }
-        }
-    }
+function addObject() {
+    args = arguments[0]
+
+    var id = args['id'];
+    var position = args['position'];
+    var orientation = args['orientation'];
+    var xml = args['xm'];
+
+    objects[id] = [position, orientation, xml];
+    createObject(position, orientation);
+
 }
+
+
+//     var entxml = (new DOMParser()).parseFromString(entxml_string, "text/xml");
+//     for (c in entxml.getElementsByTagName("component")) {
+//         for (a in c.getElementsByTagName("attribute")) {
+//             n = a.getAttribute("name");
+//             v = a.getAttribute("value");
+//             if (n == "js_code") {
+//                 eval(v);
+//             }
+//         }
+    
+// }
 
 
 function errorMsg(message) {
@@ -72,9 +85,5 @@ function reboot() {
     ws.send(JSON.stringify(data));
 }
 
-function addObject() {
-    var data = ['addObject', {}];
-    ws.send(JSON.stringify(data));
-}
 
 timerid = setInterval(getUpdate, 50);

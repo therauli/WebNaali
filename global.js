@@ -9,6 +9,7 @@ var myid;
 var timerid;
 
 var avatars = new Array();
+var objects = new Array();
 
 function setId() {
     myid = arguments[0]['id'];
