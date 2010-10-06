@@ -168,7 +168,7 @@ window.onload = function() {
 	now=parseInt(new Date().getTime());
 	frameratebuffer=Math.round(((frameratebuffer*9)+1000/(now-lasttime))/10);
 	
-	document.getElementById("info").innerHTML="fps: " + frameratebuffer +', ' +"Camera:" + camera.getLocX() +", " + camera.getLocY() + ", " + camera.getLocZ() + " : " + camera.getRotX() + ", " + camera.getRotY() + ", " + camera.getRotZ();
+	document.getElementById("info").innerHTML="fps: " + frameratebuffer +', ' +"Camera:" + camera.getLocX() +", " + camera.getLocY() + ", " + camera.getLocZ() + " : " + camera.getRotX() + ", " + camera.getRotY() + ", " + camera.getRotZ()+ " #obj: " + scene.getObjects().length;
 	checkmouse();
 	checkkeys();
 	renderer.render();
