@@ -11,11 +11,13 @@ var hoverobject;
 var mouseovercanvas;
 var lasttime=0;
 var frameratebuffer=60;
-start=parseInt(new Date().getTime());
+var start=parseInt(new Date().getTime());
 var now;
 
+/* TODO
+ * hover/click handler system
 
-
+*/
 
 function initGraffa() {
     canvas = document.getElementById('graffa');
@@ -51,7 +53,10 @@ function initGraffa() {
     camera.setRot(1.57, 0, 0);
 
     scene.setCamera(camera); 
+}
 
+function startRender() {
+    setInterval(render, 1);
 }
 
 function render() {
@@ -61,7 +66,7 @@ function render() {
 
     now=parseInt(new Date().getTime());
     frameratebuffer=Math.round(((frameratebuffer*9)+1000/(now-lasttime))/10);
-    document.getElementById("fps").innerHTML = "FPS: " + frameratebuffer;
+    document.getElementById("fps").innerHTML = "FPS: " + frameratebuffer+ " #obj: " + scene.getObjects().length;
 
     document.getElementById("info").innerHTML="Camera:" + camera.getLocX() +", " + camera.getLocY() + ", " + camera.getLocZ() + " : " + camera.getRotX() + ", " + camera.getRotY() + ", " + camera.getRotZ();
 
@@ -98,14 +103,48 @@ function newAvatar() {
     
 }
 
-function createObject(position, orientation) {
+function addObject() {
+    args = arguments[0]
+
+    var id = args['id'];
+    var position = args['position'];
+    var orientation = args['orientation'];
+    var xml = args['xml'];
+
     var object = new GLGE.Collada();
+    object.setId(id);
     object.setDocument("http://localhost:8000/WebNaali/seymourplane_triangulate.dae");
     object.setScale(0.1);
     object.setLoc(position[0], position[1], position[2]);
     object.setRot(orientation[0], orientation[1], orientation[2]);
+    
     scene.addObject(object);
+
+    /*  TODO
+	run code
+	register handlers
+    */
+
+    dynamicObjects[id] = [xml];
+
+
 }
+
+function run(xml) {
+    var entxml = (new DOMParser()).parseFromString(xml, "text/xml");
+    for (c in entxml.getElementsByTagName("component")) {
+        for (a in c.getElementsByTagName("attribute")) {
+            n = a.getAttribute("name");
+            v = a.getAttribute("value");
+            if (n == "js_code") {
+
+                eval(v);
+            }
+        }
+	
+    }
+}
+
 
 function checkkeys() {
     var camerapos = camera.getPosition();
@@ -172,7 +211,7 @@ function checkkeys() {
 }
 
 function checkmouse() {
-    if (mouseovercanvas && mouse.isButtonDown(GLGE.MI_LEFT)) {
+    if (mouseovercanvas) {
 	var mouseposition = mouse.getMousePosition();
 	mouseposition.x -= document.getElementById("container").offsetLeft;
 	mouseposition.y -= document.getElementById("container").offsetTop;
@@ -185,14 +224,23 @@ function checkmouse() {
 		}
 	    } else {
 		object.setScale(1.2);
-		for (obj in objects) {
-		    if (objects[obj] === 1) {
-			console.log("Do the " + object);
+
+		var temp_object = object;
+		while (1) {
+		    // We hit the mother load
+		    if (temp_object.parent === scene) {
+			if (mouse.isButtonDown(GLGE.MI_LEFT)) {
+			    document.getElementById("debug").innerHTML = "Activate: " + temp_object.getId();
+			    run(dynamicComponents[id]);
+			} else {
+			    document.getElementById("debug").innerHTML = "Hover: " + temp_object.getId();
+			}
+			break;
 		    }
+		    temp_object = temp_object.parent
 		}
-		hoverobject = object;
 	    }
-	    
+	    hoverobject = object;
 	}
     }
 }
@@ -209,7 +257,3 @@ function setAvatarPosition(avatar, position, orientation) {
 
 }
 
-
-function drawAvatars() {
-    render();
-}

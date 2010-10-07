@@ -9,7 +9,7 @@ var myid;
 var timerid;
 
 var avatars = new Array();
-var objects = new Array();
+var dynamicObjects = new Array();
 
 function setId() {
     myid = arguments[0]['id'];
@@ -26,8 +26,6 @@ function updateAvatar() {
     } else {
 	setAvatarPosition(avatar, args['position'], args['orientation']);
     }
-
-    drawAvatars();
 }
 
 function getMyData() {
