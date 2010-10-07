@@ -19,164 +19,29 @@
 <script type="text/javascript" src="glge/glge_collada.js"></script>
 
 
-<!-- code for 3d stuff -->
+<script type="text/javascript" src="global.js"></script>
+<script type="text/javascript" src="3d.js"></script>
+
+<!-- code for demo stuff -->
 <script type="text/javascript">
 
-var scene;
-var renderer;
-var camera;
-var lobby;
-var timerId;
-var mouseovercanvas;
-
 window.onload = function() {
-    var canvas = document.getElementById('graffa');
-    var hoverobject;
 
-    // canvas.onmousedown = function(event) {
-    // 	scene.pick(event.clientX - this.parentNode.offsetLeft,
-    // 		   event.clientY - this.parentNode.offsetTop);
-	
-    // }
-
-    canvas.onmouseover = function(event) {
-	mouseovercanvas = true;
-    }
-
-    canvas.onmousemove = function(event) {
-	mouseovercanvas = true;
-    }
-
-    canvas.onmoiseout = function(event) {
-	mouseovercanvas = false;
-
-    }
-
-    renderer = new GLGE.Renderer(canvas);   
-    scene = new GLGE.Scene();
-    
-    var keys = new GLGE.KeyInput();
-    var mouse = new GLGE.MouseInput(canvas);
-    
-
-    scene.setAmbientColor('#fff');
-
-    renderer.setScene(scene);
-
-    camera = new GLGE.Camera();
-    camera.setLoc("127", "127", "15");
-    camera.setRotOrder(GLGE.ROT_XZY);
-    camera.setType(GLGE.C_PERSPECTIVE);
-    camera.setRot(1.57, 3.141, 0);
-
-    scene.setCamera(camera);
-    
+    initGraffa();
 
     lobby = new GLGE.Collada();
     lobby.setId("aula");
     lobby.setDocument("http://localhost:8000/WebNaali/aula/aula.dae");
 
     lobby.setLoc(127, 127, 0);
-
-    duck = new GLGE.Collada();
-    duck.setDocument("http://localhost:8000/WebNaali/ankka.dae");
-    duck.setLoc(127, 117, 15);
-
     scene.addObject(lobby);
-    scene.addObject(duck);
 
-    function checkmouse() {
-	if (mouseovercanvas && mouse.isButtonDown(GLGE.MI_LEFT)) {
-	    var mouseposition = mouse.getMousePosition();
-	    mouseposition.x -= document.getElementById("container").offsetLeft;
-	    mouseposition.y -= document.getElementById("container").offsetTop;
-	    
-	    if (mouseposition.x && mouseposition.y) {
-		object = scene.pick(mouseposition.x, mouseposition.y).object
-		if (!object) {
-		    if (hoverobject) {
-			hoverobject.setScale(1);
-		    }
-		} else {
-		    object.setScale(1.2);
-		    hoverobject = object;
-		}
+    setId({id: 1});
+    newAvatar({id: 1, position: [131.806, 48.9571, 28.7691], orientation: [1.57, 0, 0]}) 
+    newAvatar({id: 2, position: [100,100, 5], orientation: [0, 0, 0]}) 
 
-	    }
-	}
-    }
-
-    function checkkeys() {
-	var camerapos = camera.getPosition();
-	var camerarot = camera.getRotation();
-	var mat = camera.getRotMatrix();
-	
-	var trans = GLGE.mulMat4Vec4(mat, [0, 0, -1, 1]);
-	var magnitude = Math.pow(Math.pow(trans[0], 2) + Math.pow(trans[1], 2), 0,5);
-
-	trans[0] = trans[0] / magnitude;
-	trans[1] = trans[1] / magnitude;
-
-	var yinc = 0;
-	var xinc = 0;
-	var zinc = 0;
-	
-	if (keys.isKeyPressed(GLGE.KI_PAGE_UP)) {
-	    zinc = 1;
-	}
-	if (keys.isKeyPressed(GLGE.KI_PAGE_DOWN)) {
-	    zinc = -1;
-	}
-	if (keys.isKeyPressed(GLGE.KI_W) || keys.isKeyPressed(GLGE.KI_UP_ARROW)) {
-	    xinc = xinc + parseFloat(trans[0]);
-	    yinc = yinc + parseFloat(trans[1]);
-	}
-	if (keys.isKeyPressed(GLGE.KI_S) || keys.isKeyPressed(GLGE.KI_DOWN_ARROW)) {
-	    xinc = xinc - parseFloat(trans[0]);
-	    yinc = yinc - parseFloat(trans[1]);
-	}
-	if (keys.isKeyPressed(GLGE.KI_A)) {
-	    xinc = xinc - parseFloat(trans[1]);
-	    yinc = yinc + parseFloat(trans[0]);
-	}
-	if (keys.isKeyPressed(GLGE.KI_D)) {
-	    xinc = xinc + parseFloat(trans[1]);
-	    yinc = yinc - parseFloat(trans[0]);
-	}
-	if (keys.isKeyPressed(GLGE.KI_LEFT_ARROW)) {
-	    camera.setRotY(camera.getRotY() + 0.1);
-	    
-	}
-	if (keys.isKeyPressed(GLGE.KI_RIGHT_ARROW)) {
-	    camera.setRotY(camera.getRotY() - 0.1);
-	}
-
-	if (xinc != 0 || yinc != 0 || zinc != 0) {
-	    camera.setLocX(camerapos.x + xinc);
-	    camera.setLocY(camerapos.y + yinc);
-	    camera.setLocZ(camerapos.z + zinc);
-	}
-	
-    }
-		   
-    var lasttime=0;
-    var frameratebuffer=60;
-    start=parseInt(new Date().getTime());
-    var now;
-    
-    function render() {
-	now=parseInt(new Date().getTime());
-	frameratebuffer=Math.round(((frameratebuffer*9)+1000/(now-lasttime))/10);
-	
-	document.getElementById("info").innerHTML="fps: " + frameratebuffer +', ' +"Camera:" + camera.getLocX() +", " + camera.getLocY() + ", " + camera.getLocZ() + " : " + camera.getRotX() + ", " + camera.getRotY() + ", " + camera.getRotZ()+ " #obj: " + scene.getObjects().length;
-	checkmouse();
-	checkkeys();
-	renderer.render();
-	lasttime=now;
-    }
-    
-    timerId = setInterval(render, 1);
-}
+    startRender();
+};
 
 </script>
 
@@ -187,16 +52,20 @@ window.onload = function() {
 <h1>Hell yeah!</h1>
 
 <div id="container">
-  <canvas id="graffa" width="510" height="510">
+  <canvas id="graffa" width="255" height="255">
     This text is displayed if your browser does not support HTML5 Canvas.
     </canvas>
     <div id="info">
     
   </div>
+  <br>
+  <div id="fps"></div>
+  <br>
+  <div id="debug"></div>
 </div>
 <p id="buttons">
 Kek plop
-<button onclick='clearInterval(timerId)'>Stop rendering</button>
+<button onclick='clearInterval(rendertimerid)'>Stop rendering</button>
 </p>
 
 </body>
