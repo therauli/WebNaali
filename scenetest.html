@@ -18,7 +18,6 @@
 <script type="text/javascript" src="glge/glge_input.js"></script>
 <script type="text/javascript" src="glge/glge_collada.js"></script>
 
-
 <script type="text/javascript" src="global.js"></script>
 <script type="text/javascript" src="3d.js"></script>
 
@@ -38,7 +37,7 @@ window.onload = function() {
 
     setId({id: 1});
     newAvatar({id: 1, position: [131.806, 48.9571, 28.7691], orientation: [1.57, 0, 0]}) 
-    newAvatar({id: 2, position: [100,100, 5], orientation: [0, 0, 0]}) 
+    addObject({id: 2, position: CLOSEPOS, orientation: [0, 0, 0], xml: ''}) 
 
     startRender();
 };

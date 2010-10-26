@@ -53,10 +53,11 @@ function initGraffa() {
     camera.setRot(1.57, 0, 0);
 
     scene.setCamera(camera); 
+    startRender()
 }
 
 function startRender() {
-    setInterval(render, 1);
+    rendertimerid = setInterval(render, 1);
 }
 
 function render() {
@@ -119,13 +120,11 @@ function addObject() {
     object.setRot(orientation[0], orientation[1], orientation[2]);
     
     scene.addObject(object);
-
-    /*  TODO
-	run code
-	register handlers
-    */
-
-    dynamicObjects[id] = [xml];
+    connectHandler('mouseHover:2', id)
+    connectHandler('mouseClicked:2', id)
+    door = new Door(id)
+    
+    dynamicObjects[id] = door;
 
 
 }
@@ -221,6 +220,7 @@ function checkmouse() {
 	    if (!object) {
 		if (hoverobject) {
 		    hoverobject.setScale(1);
+		    document.getElementById("debug").innerHTML = "";
 		}
 	    } else {
 		object.setScale(1.2);
@@ -231,8 +231,9 @@ function checkmouse() {
 		    if (temp_object.parent === scene) {
 			if (mouse.isButtonDown(GLGE.MI_LEFT)) {
 			    document.getElementById("debug").innerHTML = "Activate: " + temp_object.getId();
-			    run(dynamicComponents[id]);
+			    sendSignal('mouseClicked:'+temp_object.getId());
 			} else {
+			    sendSignal('mouseHover:'+temp_object.getId());
 			    document.getElementById("debug").innerHTML = "Hover: " + temp_object.getId();
 			}
 			break;
@@ -244,7 +245,6 @@ function checkmouse() {
 	}
     }
 }
-
 
 function setAvatarPosition(avatar, position, orientation) {
     avatar.setLocX(position[0]);
