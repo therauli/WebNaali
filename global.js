@@ -24,14 +24,14 @@ var CLOSEPOS = [99.65, 82.6978, 24.9221];
 function Door(id) {
     this.id = id;
     this.locked = false;
-    this.open = false;
+    this.opened = false;
 
     this.mouseClicked = function() {
 	if (this.locked) {
 	    console.log('Door is locked')
 	} else {
-	    this.open = !this.open
-	    console.log('Door is now ' + this.open)
+	    this.opened = !this.opened
+	    console.log('Door is now ' + this.opened)
 
 	    // Get the corresponding GLGE Collada object
 	    var object;
@@ -44,17 +44,18 @@ function Door(id) {
 		}
 	    }
 	    
-	    if (this.open) {
+	    if (this.opened) {
 		object.setLoc(OPENPOS[0], OPENPOS[1], OPENPOS[2]);
 	    } else {
 		object.setLoc(CLOSEPOS[0], CLOSEPOS[1], CLOSEPOS[2]);
 	    }
 		
 	}
-	updateObject(id, {locked: this.locked, open: this.open, postion: object.getLoc()})
+	console.log(object);
+	updateObject(id, {locked: this.locked, opened: this.opened, position: [object.getLocX(), object.getLocY(), object.getLocX()]});
     }
     this.mouseHover = function() {
-	console.log(this + ' is locked: ' + this.locked + ' and is open: ' + this.open);
+	console.log(this + ' is locked: ' + this.locked + ' and is opened: ' + this.opened);
 
     }
 }

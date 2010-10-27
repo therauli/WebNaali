@@ -57,6 +57,10 @@ function reboot() {
     ws.send(JSON.stringify(data));
 }
 
+function updateObject(id, newdata) {
+    var data = ['updateObject', {id: id, data: newdata}];
+    ws.send(JSON.stringify(data));
+}
 
 sockettimerid = setInterval(getUpdate, 50);
-rendertimerid = setInterval(render, 1);
+
