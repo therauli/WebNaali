@@ -18,8 +18,12 @@
 <script type="text/javascript" src="glge/glge_input.js"></script>
 <script type="text/javascript" src="glge/glge_collada.js"></script>
 
+<!-- jQuery -->
+<script type="text/javascript" src="jquery-1.4.3.js"></script>
+
 <script type="text/javascript" src="global.js"></script>
 <script type="text/javascript" src="3d.js"></script>
+<script type="text/javascript" src="entities.js"></script>
 
 <!-- code for demo stuff -->
 <script type="text/javascript">
@@ -37,7 +41,6 @@ window.onload = function() {
 
     setId({id: 1});
     newAvatar({id: 1, position: [131.806, 48.9571, 28.7691], orientation: [1.57, 0, 0]}) 
-    addObject({id: 2, position: CLOSEPOS, orientation: [0, 0, 0], xml: ''}) 
 
     startRender();
 };
@@ -48,10 +51,10 @@ window.onload = function() {
 </head>
 
 <body>
-<h1>Hell yeah!</h1>
+<h1>WebGL scenetest</h1>
 
 <div id="container">
-  <canvas id="graffa" width="255" height="255">
+  <canvas id="graffa" width="600" height="600">
     This text is displayed if your browser does not support HTML5 Canvas.
     </canvas>
     <div id="info">
