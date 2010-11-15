@@ -14,11 +14,6 @@ var frameratebuffer=60;
 var start=parseInt(new Date().getTime());
 var now;
 
-/* TODO
- * hover/click handler system
-
-*/
-
 function initGraffa() {
     canvas = document.getElementById('graffa');
 
@@ -74,76 +69,6 @@ function render() {
 
     lasttime = now;
 }
-
-function newAvatar() {
-    var args = arguments[0];
-
-    var id = args['id'];
-
-    var position = args['position'];
-    var orientation = args['orientation'];
-
-    var avatar = new GLGE.Collada();
-    
-    avatar.setDocument("http://localhost:8000/WebNaali/ankka.dae");
-    avatar.setLoc(position[0], position[1], position[2]);
-    avatar.setRot(orientation[0], orientation[1], orientation[2]);
-
-    scene.addObject(avatar);
-    //silly hack for compatibility with 2d client
-
-    avatar.getOrientation = function() {
-	return [avatar.getRotX(), avatar.getRotY(), avatar.getRotZ()];
-    }
-
-    avatar.getLocation = function() {
-	return [avatar.getLocX(), avatar.getLocY(), avatar.getLocZ()];
-    }
-
-    avatars[id] = avatar;
-    
-}
-
-function addObject() {
-    args = arguments[0]
-
-    var id = args['id'];
-    var position = args['position'];
-    var orientation = args['orientation'];
-    var xml = args['xml'];
-
-    var object = new GLGE.Collada();
-    object.setId(id);
-    object.setDocument("http://localhost:8000/WebNaali/seymourplane_triangulate.dae");
-    object.setScale(0.1);
-    object.setLoc(position[0], position[1], position[2]);
-    object.setRot(orientation[0], orientation[1], orientation[2]);
-    
-    scene.addObject(object);
-    connectHandler('mouseHover:' + id, id)
-    connectHandler('mouseClicked:' + id , id)
-    door = new Door(id)
-    
-    dynamicObjects[id] = door;
-
-
-}
-
-function run(xml) {
-    var entxml = (new DOMParser()).parseFromString(xml, "text/xml");
-    for (c in entxml.getElementsByTagName("component")) {
-        for (a in c.getElementsByTagName("attribute")) {
-            n = a.getAttribute("name");
-            v = a.getAttribute("value");
-            if (n == "js_code") {
-
-                eval(v);
-            }
-        }
-	
-    }
-}
-
 
 function checkkeys() {
     var camerapos = camera.getPosition();
@@ -203,10 +128,8 @@ function checkkeys() {
     }
 
     // make wclients precense move also
-    var avatar = avatars[myid];
-    avatar.setLoc(camerapos.x, camerapos.y, camerapos.z+1);
-    avatar.setRotZ(avatar.getOrientation()[2] + rot);
-	
+    var rotz = getAttr(myid, 'EC_Placeable', ['rotz'])[0] + rot
+    setAttr(myid, 'EC_Placeable', JSON.stringify({x: camerapos.x, y: camerapos.y, z: camerapos.z + 1, rotz: rotz}));
 }
 
 function checkmouse() {
@@ -245,15 +168,3 @@ function checkmouse() {
 	}
     }
 }
-
-function setAvatarPosition(avatar, position, orientation) {
-    avatar.setLocX(position[0]);
-    avatar.setLocY(position[1]);
-    avatar.setLocZ(position[2]);
-    
-    avatar.setRotX(orientation[0]);
-    avatar.setRotY(orientation[1]);
-    avatar.setRotZ(orientation[2]);
-
-}
-

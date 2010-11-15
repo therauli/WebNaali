@@ -39,8 +39,17 @@ window.onload = function() {
     lobby.setLoc(127, 127, 0);
     scene.addObject(lobby);
 
-    setId({id: 1});
-    newAvatar({id: 1, position: [131.806, 48.9571, 28.7691], orientation: [1.57, 0, 0]}) 
+    setId(1);
+
+    addEntity(1)
+    addComponent(1, 'EC_Mesh', '{url: "http://localhost:8000/WebNaali/ankka.dae"}');
+    addComponent(1, 'EC_Placeable', '{x: 131.806, y: 48.9571, z: 28.7691, rotx: 1.57, roty: 0, rotz: 0}');
+
+    
+    addEntity(2);
+    addComponent(2, 'EC_Mesh', '{url: "http://localhost:8000/WebNaali/ankka.dae"}');
+    addComponent(2, 'EC_Placeable', '{x: 93.5850172746437, y: 34.89469801795778, z: 28.7691, rotx: 1.57, roty: -6.5999999999999925, rotz: 0}');
+
 
     startRender();
 };
@@ -54,11 +63,10 @@ window.onload = function() {
 <h1>WebGL scenetest</h1>
 
 <div id="container">
-  <canvas id="graffa" width="600" height="600">
+  <canvas id="graffa" width="500" height="500">
     This text is displayed if your browser does not support HTML5 Canvas.
     </canvas>
     <div id="info">
-    
   </div>
   <br>
   <div id="fps"></div>
