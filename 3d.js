@@ -120,8 +120,8 @@ function addObject() {
     object.setRot(orientation[0], orientation[1], orientation[2]);
     
     scene.addObject(object);
-    connectHandler('mouseHover:2', id)
-    connectHandler('mouseClicked:2', id)
+    connectHandler('mouseHover:' + id, id)
+    connectHandler('mouseClicked:' + id , id)
     door = new Door(id)
     
     dynamicObjects[id] = door;
