@@ -18,9 +18,6 @@ var dynamicObjects = [];
 
 var handlers = {};
 
-var OPENPOS = [101.862, 82.6978, 24.9221];
-var CLOSEPOS = [99.65, 82.6978, 24.9221];
-
 function Door(id) {
     this.id = id;
     this.locked = false;
@@ -43,13 +40,6 @@ function Door(id) {
 		    break
 		}
 	    }
-	    
-	    if (this.opened) {
-		object.setLoc(OPENPOS[0], OPENPOS[1], OPENPOS[2]);
-	    } else {
-		object.setLoc(CLOSEPOS[0], CLOSEPOS[1], CLOSEPOS[2]);
-	    }
-		
 	}
 	console.log(object);
 	updateObject(id, {locked: this.locked, opened: this.opened, position: [object.getLocX(), object.getLocY(), object.getLocX()]});
