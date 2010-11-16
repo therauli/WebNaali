@@ -106,3 +106,29 @@ function getAttr(id, component, keys) {
     }
     return values
 }
+
+function loadScene(xml) {
+    var entxml = (new DOMParser()).parseFromString(xml, "text/xml");
+    var components = entxml.getElementsByTagName("component");
+
+    var data = {};
+    var id = entxml.getElementsByTagName("entity")[0].getAttribute("id");
+
+    data[id] = {};
+
+    for (c = 0; c < components.length; c++) {
+	var component = components[c].getAttribute("type")
+	data[id][component] = {}
+	var attributes = components[c].getElementsByTagName("attribute");
+	for (a = 0; a < attributes.length; a++) {
+            var name = attributes[a].getAttribute("name");
+	    var value = attributes[a].getAttribute("value");
+	    data[id][component][name] = value
+	}
+    }
+    return data;
+}
+
+
+
+ent_data = '<scene> <entity id="-1958704278">  <component type="EC_Placeable" sync="0">   <attribute value="0,0,0,0,0,0,1,1,1" name="Transform"/>  </component>  <component type="EC_Mesh" sync="0">   <attribute value="0,0,-0.856287,90,1.70755e-06,-90,1,1,1" name="Transform"/>   <attribute value="" name="Mesh ref"/>   <attribute value="" name="Skeleton ref"/>   <attribute value="" name="Mesh materials"/>   <attribute value="0" name="Draw distance"/>   <attribute value="true" name="Cast shadows"/>  </component>  <component type="EC_AnimationController" sync="0">   <attribute value="" name="Animation state"/>  </component> </entity></scene>'
