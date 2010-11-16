@@ -1,0 +1,16 @@
+= WebNaali - Web* stuff for realXtend naali =
+
+A simple web client prototype for naali. 
+
+== Features ==
+
+ * Uses GLGE for webgl stuff
+ * Uses Collada meshes
+ * Uses websockets for communication with naali server module
+ * Quick and dirty (or more like slow and dirty)
+ 
+= TODO =
+
+ * Skeletal animations
+ * Terrain
+ * Finish xml scene loading
