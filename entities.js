@@ -50,7 +50,7 @@ function addEntity(params) {
 }
 
 function addComponent(params) {
-    params = eval('(' + params + ')')
+    //params = eval('(' + params + ')')
     id = params['id']
     console.log(id)
     var newComponent = params['component'];
