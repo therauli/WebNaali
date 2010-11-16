@@ -43,12 +43,12 @@ window.onload = function() {
     setId({id: 1});
 
     addEntity({id: 1})
-    addComponent('{id: 1, component: "EC_Mesh", url: "http://localhost:8000/WebNaali/ankka.dae"}');
-    addComponent('{id: 1, component: "EC_Placeable", x: 131.806, y: 48.9571, z: 28.7691, rotx: 1.57, roty: 0, rotz: 0}');
+    addComponent({id: 1, component: "EC_Mesh", url: "http://localhost:8000/WebNaali/ankka.dae"});
+    addComponent({id: 1, component: "EC_Placeable", x: 131.806, y: 48.9571, z: 28.7691, rotx: 1.57, roty: 0, rotz: 0});
     
     addEntity({id: 2});
-    addComponent('{id: 2, component: "EC_Mesh", url: "http://localhost:8000/WebNaali/ankka.dae"}');
-    addComponent('{id: 2, component: "EC_Placeable", x: 93.5850172746437, y: 34.89469801795778, z: 28.7691, rotx: 1.57, roty: -6.5999999999999925, rotz: 0}');
+    addComponent({id: 2, component: "EC_Mesh", url: "http://localhost:8000/WebNaali/ankka.dae"});
+    addComponent({id: 2, component: "EC_Placeable", x: 93.5850172746437, y: 34.89469801795778, z: 28.7691, rotx: 1.57, roty: -6.5999999999999925, rotz: 0});
 
     loadScene(ent_data);
     startRender();

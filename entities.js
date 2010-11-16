@@ -10,10 +10,10 @@ function Entity(id) {
 }
 
 (function (Components, $, undefined) {
-    Components.EC_Placeable = function(params) {
 
+    Components.EC_Placeable = function(params) {
 	this.componentName = 'EC_Placeable';
-	this.parent = params['parent'];
+	this.parent = params['id'];
 	this.x = params['x'];
 	this.y = params['y'];
 	this.z = params['z'];
@@ -24,20 +24,20 @@ function Entity(id) {
     
     Components.EC_Mesh = function (params) {
 	this.componentName = 'EC_Mesh';
-	this.parent = params['parent'];
+	this.parent = params['id'];
 
 	this.url = params['url']
-
+	
 	if (this.url) {
 	    this.mesh = new GLGE.Collada();
-	    this.mesh.setId(parent);
+	    this.mesh.setId(this.parent);
 	    this.mesh.setDocument(this.url);
 	    scene.addObject(this.mesh);
 	}
     }
     
     Components.EC_DynamicComponent = function(params) {
-	this.pareng = params['parent'];
+	this.pareng = params['id'];
 	this.componentName = 'EC_DynamicComponent';
 	this.code = params['code'];
     }
@@ -50,7 +50,6 @@ function addEntity(params) {
 }
 
 function addComponent(params) {
-    //params = eval('(' + params + ')')
     id = params['id']
     console.log(id)
     var newComponent = params['component'];
@@ -67,7 +66,6 @@ function addComponent(params) {
 }
     
 function setAttr(params) {
-    params = eval('(' + params + ')');
     var id = params['id'];
     var component = params['component'];
 
@@ -144,15 +142,15 @@ function loadScene(xml) {
 	    // FIXME What is the transform?!
 	    var transform = data[id][component]['Transform'].split(',');
 
-	    addComponent(JSON.stringify({id: id,
-					 component: component,
-					 x: transform[0], 
-					 y: transform[1], 
-					 z: transform[2], 
-					 rotx: transform[3], 
-					 roty: transform[4], 
-					 rotz: transform[5]}));
-	    break
+	    addComponent({id: id,
+			  component: component,
+			  x: transform[0], 
+			  y: transform[1], 
+			  z: transform[2], 
+			  rotx: transform[3], 
+			  roty: transform[4], 
+			  rotz: transform[5]});
+	break
 	    
 	}
     }
