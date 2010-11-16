@@ -52,11 +52,11 @@ function addComponent(id, newComponent, params) {
     var component;
 		
     if (Components[newComponent]) {
-	//console.log(id + ' making new ' + newComponent + ' ' + params)
+	console.log(id + ' making new ' + newComponent + ' ' + params)
 	component = new Components[newComponent](id, eval('(' + params + ')'));
-	//console.log(id + ' adding ' + newComponent + ' ' + params)
+	console.log(id + ' adding ' + newComponent + ' ' + params)
 	entities[id].addComponent(component);
-	//console.log(id + ' setting attrs ' + newComponent + ' ' + params)
+	console.log(id + ' setting attrs ' + newComponent + ' ' + params)
 	setAttr(id, newComponent, params);
     }
 }
@@ -107,6 +107,7 @@ function getAttr(id, component, keys) {
     return values
 }
 
+
 function loadScene(xml) {
     var entxml = (new DOMParser()).parseFromString(xml, "text/xml");
     var components = entxml.getElementsByTagName("component");
@@ -126,7 +127,29 @@ function loadScene(xml) {
 	    data[id][component][name] = value
 	}
     }
-    return data;
+
+    if (!entities[id]) {
+	addEntity(id);
+    }
+    
+    for (component in data[id]) {
+	console.log(component);
+	switch(component) {
+	case "EC_Placeable":
+	    // FIXME What is the transform?!
+	    console.log(data[id][component]['Transform'].split(','));
+	    var transform = data[id][component]['Transform'].split(',');
+	    console.log(transform);
+	    addComponent(id, component, JSON.stringify({x: transform[0], 
+							y: transform[1], 
+							z: transform[2], 
+							rotx: transform[3], 
+							roty: transform[4], 
+							rotz: transform[5]}));
+	    break
+	    
+	}
+    }
 }
 
 

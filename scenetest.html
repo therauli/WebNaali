@@ -32,12 +32,12 @@ window.onload = function() {
 
     initGraffa();
 
-    lobby = new GLGE.Collada();
-    lobby.setId("aula");
-    lobby.setDocument("http://localhost:8000/WebNaali/aula/aula.dae");
+    // lobby = new GLGE.Collada();
+    // lobby.setId("aula");
+    // lobby.setDocument("http://localhost:8000/WebNaali/aula/aula.dae");
 
-    lobby.setLoc(127, 127, 0);
-    scene.addObject(lobby);
+    // lobby.setLoc(127, 127, 0);
+    // scene.addObject(lobby);
 
     setId(1);
 
@@ -51,6 +51,7 @@ window.onload = function() {
     addComponent(2, 'EC_Placeable', '{x: 93.5850172746437, y: 34.89469801795778, z: 28.7691, rotx: 1.57, roty: -6.5999999999999925, rotz: 0}');
 
 
+    loadScene(ent_data);
     startRender();
 };
 
