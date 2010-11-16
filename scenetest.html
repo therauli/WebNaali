@@ -32,24 +32,23 @@ window.onload = function() {
 
     initGraffa();
 
-    // lobby = new GLGE.Collada();
-    // lobby.setId("aula");
-    // lobby.setDocument("http://localhost:8000/WebNaali/aula/aula.dae");
+    lobby = new GLGE.Collada();
 
-    // lobby.setLoc(127, 127, 0);
-    // scene.addObject(lobby);
+    lobby.setId("aula");
+    lobby.setDocument("http://localhost:8000/WebNaali/aula/aula.dae");
 
-    setId(1);
+    lobby.setLoc(127, 127, 0);
+    scene.addObject(lobby);
 
-    addEntity(1)
-    addComponent(1, 'EC_Mesh', '{url: "http://localhost:8000/WebNaali/ankka.dae"}');
-    addComponent(1, 'EC_Placeable', '{x: 131.806, y: 48.9571, z: 28.7691, rotx: 1.57, roty: 0, rotz: 0}');
+    setId({id: 1});
 
+    addEntity({id: 1})
+    addComponent('{id: 1, component: "EC_Mesh", url: "http://localhost:8000/WebNaali/ankka.dae"}');
+    addComponent('{id: 1, component: "EC_Placeable", x: 131.806, y: 48.9571, z: 28.7691, rotx: 1.57, roty: 0, rotz: 0}');
     
-    addEntity(2);
-    addComponent(2, 'EC_Mesh', '{url: "http://localhost:8000/WebNaali/ankka.dae"}');
-    addComponent(2, 'EC_Placeable', '{x: 93.5850172746437, y: 34.89469801795778, z: 28.7691, rotx: 1.57, roty: -6.5999999999999925, rotz: 0}');
-
+    addEntity({id: 2});
+    addComponent('{id: 2, component: "EC_Mesh", url: "http://localhost:8000/WebNaali/ankka.dae"}');
+    addComponent('{id: 2, component: "EC_Placeable", x: 93.5850172746437, y: 34.89469801795778, z: 28.7691, rotx: 1.57, roty: -6.5999999999999925, rotz: 0}');
 
     loadScene(ent_data);
     startRender();
@@ -57,14 +56,13 @@ window.onload = function() {
 
 </script>
 
-
 </head>
 
 <body>
 <h1>WebGL scenetest</h1>
 
 <div id="container">
-  <canvas id="graffa" width="500" height="500">
+  <canvas id="graffa" width="400" height="400">
     This text is displayed if your browser does not support HTML5 Canvas.
     </canvas>
     <div id="info">

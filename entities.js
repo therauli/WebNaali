@@ -10,10 +10,10 @@ function Entity(id) {
 }
 
 (function (Components, $, undefined) {
-    Components.EC_Placeable = function(parent, params) {
+    Components.EC_Placeable = function(params) {
 
 	this.componentName = 'EC_Placeable';
-	this.parent = parent;
+	this.parent = params['parent'];
 	this.x = params['x'];
 	this.y = params['y'];
 	this.z = params['z'];
@@ -22,9 +22,9 @@ function Entity(id) {
 	this.rotz = params['rotz'];
     }
     
-    Components.EC_Mesh = function (parent, params) {
+    Components.EC_Mesh = function (params) {
 	this.componentName = 'EC_Mesh';
-	this.parent = parent;
+	this.parent = params['parent'];
 
 	this.url = params['url']
 
@@ -36,41 +36,48 @@ function Entity(id) {
 	}
     }
     
-    Components.EC_DynamicComponent = function(parent, code) {
-	this.pareng = parent;
+    Components.EC_DynamicComponent = function(params) {
+	this.pareng = params['parent'];
 	this.componentName = 'EC_DynamicComponent';
-	this.code = code;
+	this.code = params['code'];
     }
     
 }(window.Components = window.Components || {}, jQuery));
 
-function addEntity(id) {
+function addEntity(params) {
+    var id = params['id'];
     entities[id] = new Entity(id);
 }
 
-function addComponent(id, newComponent, params) {
+function addComponent(params) {
+    params = eval('(' + params + ')')
+    id = params['id']
+    console.log(id)
+    var newComponent = params['component'];
+    console.log(params)
     var component;
-		
+    console.log(newComponent)
     if (Components[newComponent]) {
 	console.log(id + ' making new ' + newComponent + ' ' + params)
-	component = new Components[newComponent](id, eval('(' + params + ')'));
+	component = new Components[newComponent](params);
 	console.log(id + ' adding ' + newComponent + ' ' + params)
 	entities[id].addComponent(component);
 	console.log(id + ' setting attrs ' + newComponent + ' ' + params)
-	setAttr(id, newComponent, params);
     }
 }
     
-function setAttr(id, component, data) {
-    // console.log(id + ' SETTING ' + component + ' ' + data)
+function setAttr(params) {
+    params = eval('(' + params + ')');
+    var id = params['id'];
+    var component = params['component'];
+
+    console.log(id + ' SETTING ' + component + ' ' + JSON.stringify(params))
     var comp;
     var values;
     for (comp in entities[id].components) {
 	if (entities[id].components[comp].componentName == component) {
 	    // console.log('FOUND corresponding component')
-	    values = eval('(' + data + ')')
 	    jQuery.extend(entities[id].components[comp], values);
-
 	    if (component == 'EC_Placeable') {
 		// console.log('IS PLACEABLE')
 		for (child in scene.children) {
@@ -78,16 +85,14 @@ function setAttr(id, component, data) {
 		    var collada = scene.children[child];
 		    if (collada.getId() == id) {
 			// console.log('Found corresponding id')
-			x = values['x']
-			y = values['y']
-			z = values['z']
+			x = params['x']
+			y = params['y']
+			z = params['z']
 			if (x) collada.setLocX(x);
 			if (y) collada.setLocY(y);
 			if (z) collada.setLocZ(z);
-			   
 		    }
 		}
-		
 	    }
 	}
     }
@@ -129,23 +134,24 @@ function loadScene(xml) {
     }
 
     if (!entities[id]) {
-	addEntity(id);
+	addEntity({id: id});
     }
     
     for (component in data[id]) {
-	console.log(component);
+
 	switch(component) {
 	case "EC_Placeable":
 	    // FIXME What is the transform?!
-	    console.log(data[id][component]['Transform'].split(','));
 	    var transform = data[id][component]['Transform'].split(',');
-	    console.log(transform);
-	    addComponent(id, component, JSON.stringify({x: transform[0], 
-							y: transform[1], 
-							z: transform[2], 
-							rotx: transform[3], 
-							roty: transform[4], 
-							rotz: transform[5]}));
+
+	    addComponent(JSON.stringify({id: id,
+					 component: component,
+					 x: transform[0], 
+					 y: transform[1], 
+					 z: transform[2], 
+					 rotx: transform[3], 
+					 roty: transform[4], 
+					 rotz: transform[5]}));
 	    break
 	    
 	}

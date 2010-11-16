@@ -129,7 +129,7 @@ function checkkeys() {
 
     // make wclients precense move also
     var rotz = getAttr(myid, 'EC_Placeable', ['rotz'])[0] + rot
-    setAttr(myid, 'EC_Placeable', JSON.stringify({x: camerapos.x, y: camerapos.y, z: camerapos.z + 1, rotz: rotz}));
+    //setAttr(JSON.stringify({id: myid, component: 'EC_Placeable', x: camerapos.x, y: camerapos.y, z: camerapos.z + 1, rotz: rotz}));
 }
 
 function checkmouse() {

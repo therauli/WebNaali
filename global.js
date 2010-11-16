@@ -2,11 +2,6 @@
   global.js - Stuff to handle things. Handles general avatar stuff.
 */
 
-/* Ovien avaus
-   Synkkaus
-   skeletal animointi
-*/
-
 var canvas;
 var width;
 var height;
@@ -15,10 +10,11 @@ var timerid;
 
 var handlers = {};
 
-function setId(id) {
-    myid = id;
+function setId() {
+    myid = arguments[0]['id'];
 }
 
+//Obsolete:
 function Door(id) {
     this.id = id;
     this.locked = false;
@@ -52,21 +48,21 @@ function Door(id) {
 }
 
 function sendSignal(signal) {
-    console.log('sending: ' + signal);
+    // FIXME change to work with new EC system
     var action = signal.split(':')[0];
     var id = signal.split(':')[1];
-    var object = dynamicObjects[id];
+    console.log('sending: ' + action + ' to ' + id);
+    // var object = dynamicObjects[id];
 
-    if (action == 'mouseClicked') {
-	object.mouseClicked();
-    } else if (action == 'mouseHover') {
-	object.mouseHover();
-    }
+    // if (action == 'mouseClicked') {
+    // 	object.mouseClicked();
+    // } else if (action == 'mouseHover') {
+    // 	object.mouseHover();
+    // }
     
 }
 
 function connectHandler(signal, id) {
     handlers[signal] = handlers[signal] || [];
     handlers[signal].push(id);
-
 }
