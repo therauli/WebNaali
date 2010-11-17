@@ -24,6 +24,7 @@ function Entity(id) {
     
     Components.EC_Mesh = function (params) {
 	this.componentName = 'EC_Mesh';
+
 	this.parent = params['id'];
 
 	this.url = params['url']
@@ -32,6 +33,7 @@ function Entity(id) {
 	    this.mesh = new GLGE.Collada();
 	    this.mesh.setId(this.parent);
 	    this.mesh.setDocument(this.url);
+	    console.log('adding ' + params)
 	    scene.addObject(this.mesh);
 	}
     }
@@ -46,22 +48,30 @@ function Entity(id) {
 
 function addEntity(params) {
     var id = params['id'];
-    entities[id] = new Entity(id);
+    if (!entities[id])
+	entities[id] = new Entity(id);
 }
 
 function addComponent(params) {
     id = params['id']
-    console.log(id)
+
     var newComponent = params['component'];
-    console.log(params)
+
     var component;
-    console.log(newComponent)
+
     if (Components[newComponent]) {
-	console.log(id + ' making new ' + newComponent + ' ' + params)
+	//FIXME check that entity does not already have a mesh. Should
+	//be done smarter
+	for (i = 0; i < entities[id].components.length; i++) {
+	    if (entities[id].components[i].componentName == newComponent)
+		return;
+	}
+	
+	// console.log(id + ' making new ' + newComponent + ' ' + params)
 	component = new Components[newComponent](params);
-	console.log(id + ' adding ' + newComponent + ' ' + params)
+	// console.log(id + ' adding ' + newComponent + ' ' + params)
 	entities[id].addComponent(component);
-	console.log(id + ' setting attrs ' + newComponent + ' ' + params)
+	// console.log(id + ' setting attrs ' + newComponent + ' ' + params)
     }
 }
     
@@ -69,26 +79,39 @@ function setAttr(params) {
     var id = params['id'];
     var component = params['component'];
 
-    console.log(id + ' SETTING ' + component + ' ' + JSON.stringify(params))
+    //console.log(id + ' SETTING ' + component + ' ' + JSON.stringify(params))
     var comp;
-    var values;
+
     for (comp in entities[id].components) {
 	if (entities[id].components[comp].componentName == component) {
 	    // console.log('FOUND corresponding component')
-	    jQuery.extend(entities[id].components[comp], values);
+
+	    jQuery.extend(entities[id].components[comp], params);
 	    if (component == 'EC_Placeable') {
 		// console.log('IS PLACEABLE')
 		for (child in scene.children) {
 		    // console.log('CHILD: ' + child);
 		    var collada = scene.children[child];
 		    if (collada.getId() == id) {
-			// console.log('Found corresponding id')
 			x = params['x']
 			y = params['y']
 			z = params['z']
-			if (x) collada.setLocX(x);
-			if (y) collada.setLocY(y);
-			if (z) collada.setLocZ(z);
+			rotx = params['rotx']
+			roty = params['roty']
+			rotz = params['rotz']
+			if (x)
+			    collada.setLocX(x);
+			if (y)
+			    collada.setLocY(y);
+			if (z)
+			    collada.setLocZ(z);
+			if (rotx)
+			    collada.setRotX(rotx);
+			if (roty)
+			    collada.setRotX(roty);
+			if (rotz)
+			    collada.setRotX(rotz);
+			
 		    }
 		}
 	    }
@@ -96,8 +119,11 @@ function setAttr(params) {
     }
 }
 
-function getAttr(id, component, keys) {
-    var comp;
+function getAttr(params) {
+    var id = params["id"];
+    var component = params["component"];1
+    var keys = params["keys"];
+    
     var values = []
     for (comp in entities[id].components) {
 	if (entities[id].components[comp].componentName == component) {

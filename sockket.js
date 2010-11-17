@@ -42,10 +42,21 @@ function logMessage() {
     console.log('logMessage: ' + JSON.stringify(arguments[0]['message']));
 }
 
-function getUpdate() {
+function updateAttr() {
     /* Don't ask for update if server hasn't set the id yet */
+    /* Currently only syncs EC_Placeable */
+
     if (myid) {
-	var data = ["giev update", getMyData()];
+	var values = getAttr({'id': myid, 'component': 'EC_Placeable', 'keys': ['x', 'y', 'z', 'rotx', 'roty', 'rotz']});
+
+	var data = ["setAttr", {id: myid,
+				component: "EC_Placeable", 
+				x: values[0],
+				y: values[1],
+				z: values[2],
+				rotx: values[3],
+				roty: values[5],
+				rotz: values[4]}];
 	ws.send(JSON.stringify(data));
     }
 }
@@ -62,5 +73,5 @@ function updateObject(id, newdata) {
     ws.send(JSON.stringify(data));
 }
 
-sockettimerid = setInterval(getUpdate, 50);
+sockettimerid = setInterval(updateAttr, 50);
 
