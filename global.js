@@ -19,7 +19,6 @@ function setId() {
 
 function addmove(move) {
     moves.push(move)
-    
 }
 
 function isin(value, list) {
@@ -37,7 +36,7 @@ function checkmove() {
 	var move = moves[i];
 	if (!(isin(move, old_moves))) {
 	    console.log('MOVE ' + move);
-	    ws.send(JSON.stringify(["Action", {action: "Move", params: [move]}]));
+	    ws.send(JSON.stringify(["Action", {action: "Move", params: [move], id: myid}]));
 	}
     }
 
@@ -45,7 +44,7 @@ function checkmove() {
 	var move = old_moves[i];
 	if (!(isin(move, moves))) {
 	    console.log('STOP ' + move);
-	    ws.send(JSON.stringify(["Action", {action: "Stop", params: [move]}]));
+	    ws.send(JSON.stringify(["Action", {action: "Stop", params: [move], id: myid}]));
 	}
     }
 
