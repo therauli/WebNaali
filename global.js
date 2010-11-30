@@ -8,11 +8,51 @@ var height;
 var myid;
 var timerid;
 
+var moves = new Array()
+var old_moves = new Array()
+
 var handlers = {};
 
 function setId() {
     myid = arguments[0]['id'];
 }
+
+function addmove(move) {
+    moves.push(move)
+    
+}
+
+function isin(value, list) {
+    for (i = 0; i < list.length; i++) {
+	if (value == list[i]) {
+	    return true;
+	}
+    }
+    return false;
+}
+
+function checkmove() {
+
+    for (i in moves) {
+	var move = moves[i];
+	if (!(isin(move, old_moves))) {
+	    console.log('MOVE ' + move);
+	    ws.send(JSON.stringify(["Action", {action: "Move", params: [move]}]));
+	}
+    }
+
+    for (i in old_moves) {
+	var move = old_moves[i];
+	if (!(isin(move, moves))) {
+	    console.log('STOP ' + move);
+	    ws.send(JSON.stringify(["Action", {action: "Stop", params: [move]}]));
+	}
+    }
+
+    old_moves = moves.slice(0);
+    moves = new Array();
+}
+
 
 //Obsolete:
 function Door(id) {
@@ -48,17 +88,11 @@ function Door(id) {
 }
 
 function sendSignal(signal) {
-    // FIXME change to work with new EC system
     var action = signal.split(':')[0];
     var id = signal.split(':')[1];
     console.log('sending: ' + action + ' to ' + id);
-    // var object = dynamicObjects[id];
 
-    // if (action == 'mouseClicked') {
-    // 	object.mouseClicked();
-    // } else if (action == 'mouseHover') {
-    // 	object.mouseHover();
-    // }
+    
     
 }
 
@@ -66,5 +100,3 @@ function connectHandler(signal, id) {
     handlers[signal] = handlers[signal] || [];
     handlers[signal].push(id);
 }
-
-                

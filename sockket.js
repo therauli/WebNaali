@@ -73,5 +73,5 @@ function updateObject(id, newdata) {
     ws.send(JSON.stringify(data));
 }
 
-sockettimerid = setInterval(updateAttr, 50);
+//sockettimerid = setInterval(updateAttr, 50);
 

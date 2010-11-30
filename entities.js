@@ -33,7 +33,6 @@ function Entity(id) {
 	    this.mesh = new GLGE.Collada();
 	    this.mesh.setId(this.parent);
 	    this.mesh.setDocument(this.url);
-	    console.log('adding ' + params)
 	    scene.addObject(this.mesh);
 	}
     }

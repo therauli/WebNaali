@@ -52,13 +52,13 @@ function initGraffa() {
 }
 
 function startRender() {
-    rendertimerid = setInterval(render, 1);
+    rendertimerid = setInterval(render, 50);
 }
 
 function render() {
     renderer.render();
     checkkeys();
-    checkmouse();
+    //checkmouse();
 
     now=parseInt(new Date().getTime());
     frameratebuffer=Math.round(((frameratebuffer*9)+1000/(now-lasttime))/10);
@@ -86,7 +86,7 @@ function checkkeys() {
     var zinc = 0;
     
     var rot = 0;
-    
+ 
     if (keys.isKeyPressed(GLGE.KI_PAGE_UP)) {
 	zinc = 1;
     }
@@ -96,18 +96,24 @@ function checkkeys() {
     if (keys.isKeyPressed(GLGE.KI_W) || keys.isKeyPressed(GLGE.KI_UP_ARROW)) {
 	xinc = xinc + parseFloat(trans[0]);
 	yinc = yinc + parseFloat(trans[1]);
+	addmove('forward');
+
     }
     if (keys.isKeyPressed(GLGE.KI_S) || keys.isKeyPressed(GLGE.KI_DOWN_ARROW)) {
 	xinc = xinc - parseFloat(trans[0]);
 	yinc = yinc - parseFloat(trans[1]);
+	addmove('back');
+
     }
     if (keys.isKeyPressed(GLGE.KI_A)) {
 	xinc = xinc - parseFloat(trans[1]);
 	yinc = yinc + parseFloat(trans[0]);
+	addmove('left')
     }
     if (keys.isKeyPressed(GLGE.KI_D)) {
 	xinc = xinc + parseFloat(trans[1]);
 	yinc = yinc - parseFloat(trans[0]);
+	addmove('right')
     }
     if (keys.isKeyPressed(GLGE.KI_LEFT_ARROW)) {
 	rot = 0.1;
@@ -127,9 +133,12 @@ function checkkeys() {
 	camera.setRotY(camera.getRotY() + rot);
     }
 
+    checkmove();
+
+
     // make wclients precense move also
-    var rotz = getAttr({'id': myid, 'component': 'EC_Placeable', 'keys': ['rotz']})[0] + rot;
-    setAttr({id: myid, component: 'EC_Placeable', x: camerapos.x, y: camerapos.y, z: camerapos.z + 1, rotz: rotz});
+    //var rotz = getAttr({'id': myid, 'component': 'EC_Placeable', 'keys': ['rotz']})[0] + rot;
+    //setAttr({id: myid, component: 'EC_Placeable', x: camerapos.x, y: camerapos.y, z: camerapos.z + 1, rotz: rotz});
 }
 
 function checkmouse() {
@@ -146,8 +155,6 @@ function checkmouse() {
 		    document.getElementById("debug").innerHTML = "";
 		}
 	    } else {
-		object.setScale(1.2);
-
 		var temp_object = object;
 		while (1) {
 		    // We hit the mother load
