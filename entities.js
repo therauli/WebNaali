@@ -38,7 +38,7 @@ function Entity(id) {
     }
     
     Components.EC_DynamicComponent = function(params) {
-	this.pareng = params['id'];
+	this.parent = params['id'];
 	this.componentName = 'EC_DynamicComponent';
 	this.code = params['code'];
     }

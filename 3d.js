@@ -61,7 +61,7 @@ function render() {
     //checkmouse();
 
     now=parseInt(new Date().getTime());
-    frameratebuffer=Math.round(((frameratebuffer*9)+1000/(now-lasttime))/10);
+    frameratebuffer = Math.round(((frameratebuffer * 9) + 1000/ (now - lasttime)) / 10);
     document.getElementById("fps").innerHTML = "FPS: " + frameratebuffer+ " #obj: " + scene.getObjects().length;
 
     document.getElementById("info").innerHTML="Camera:" + camera.getLocX() +", " + camera.getLocY() + ", " + camera.getLocZ() + " : " + camera.getRotX() + ", " + camera.getRotY() + ", " + camera.getRotZ();
@@ -96,31 +96,33 @@ function checkkeys() {
     if (keys.isKeyPressed(GLGE.KI_W) || keys.isKeyPressed(GLGE.KI_UP_ARROW)) {
 	xinc = xinc + parseFloat(trans[0]);
 	yinc = yinc + parseFloat(trans[1]);
-	addmove('forward');
+	addmove('Move,forward');
 
     }
     if (keys.isKeyPressed(GLGE.KI_S) || keys.isKeyPressed(GLGE.KI_DOWN_ARROW)) {
 	xinc = xinc - parseFloat(trans[0]);
 	yinc = yinc - parseFloat(trans[1]);
-	addmove('back');
+	addmove('Move,back');
 
     }
     if (keys.isKeyPressed(GLGE.KI_A)) {
 	xinc = xinc - parseFloat(trans[1]);
 	yinc = yinc + parseFloat(trans[0]);
-	addmove('left')
+	addmove('Move,left');
     }
     if (keys.isKeyPressed(GLGE.KI_D)) {
 	xinc = xinc + parseFloat(trans[1]);
 	yinc = yinc - parseFloat(trans[0]);
-	addmove('right')
+	addmove('Move,right');
     }
     if (keys.isKeyPressed(GLGE.KI_LEFT_ARROW)) {
 	rot = 0.1;
+	addmove('Rotate,left');
 	
     }
     if (keys.isKeyPressed(GLGE.KI_RIGHT_ARROW)) {
 	rot = -0.1;
+	addmove('Rotate,right');
     }
 
     if (xinc != 0 || yinc != 0 || zinc != 0) {

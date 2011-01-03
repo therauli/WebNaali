@@ -35,16 +35,27 @@ function checkmove() {
     for (i in moves) {
 	var move = moves[i];
 	if (!(isin(move, old_moves))) {
+	    action = move.split(',')[0];
+	    dir = move.split(',')[1];
 	    console.log('MOVE ' + move);
-	    ws.send(JSON.stringify(["Action", {action: "Move", params: [move], id: myid}]));
+	    ws.send(JSON.stringify(["Action", {action: action, params: [dir], id: myid}]));
 	}
     }
 
     for (i in old_moves) {
 	var move = old_moves[i];
 	if (!(isin(move, moves))) {
+	    action = move.split(',')[0];
+	    if (action == 'Rotate') {
+		action = 'StopRotate';
+	    } else {
+		action = 'Stop';
+	    }
+	    
+	    dir = move.split(',')[1];
+
 	    console.log('STOP ' + move);
-	    ws.send(JSON.stringify(["Action", {action: "Stop", params: [move], id: myid}]));
+	    ws.send(JSON.stringify(["Action", {action: action, params: dir, id: myid}]));
 	}
     }
 
