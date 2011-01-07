@@ -27,7 +27,6 @@ function initGraffa() {
 
     canvas.onmoiseout = function(event) {
 	mouseovercanvas = false;
-
     }
 
     renderer = new GLGE.Renderer(canvas);
@@ -94,49 +93,48 @@ function checkkeys() {
 	zinc = -1;
     }
     if (keys.isKeyPressed(GLGE.KI_W) || keys.isKeyPressed(GLGE.KI_UP_ARROW)) {
-	xinc = xinc + parseFloat(trans[0]);
-	yinc = yinc + parseFloat(trans[1]);
+	//xinc = xinc + parseFloat(trans[0]);
+	//yinc = yinc + parseFloat(trans[1]);
 	addmove('Move,forward');
 
     }
     if (keys.isKeyPressed(GLGE.KI_S) || keys.isKeyPressed(GLGE.KI_DOWN_ARROW)) {
-	xinc = xinc - parseFloat(trans[0]);
-	yinc = yinc - parseFloat(trans[1]);
+	//xinc = xinc - parseFloat(trans[0]);
+	//yinc = yinc - parseFloat(trans[1]);
 	addmove('Move,back');
 
     }
     if (keys.isKeyPressed(GLGE.KI_A)) {
-	xinc = xinc - parseFloat(trans[1]);
-	yinc = yinc + parseFloat(trans[0]);
+	//xinc = xinc - parseFloat(trans[1]);
+	//yinc = yinc + parseFloat(trans[0]);
 	addmove('Move,left');
     }
     if (keys.isKeyPressed(GLGE.KI_D)) {
-	xinc = xinc + parseFloat(trans[1]);
-	yinc = yinc - parseFloat(trans[0]);
+	//xinc = xinc + parseFloat(trans[1]);
+	//yinc = yinc - parseFloat(trans[0]);
 	addmove('Move,right');
     }
     if (keys.isKeyPressed(GLGE.KI_LEFT_ARROW)) {
-	rot = 0.1;
+	//rot = 0.1;
 	addmove('Rotate,left');
 	
     }
     if (keys.isKeyPressed(GLGE.KI_RIGHT_ARROW)) {
-	rot = -0.1;
+	//rot = -0.1;
 	addmove('Rotate,right');
     }
 
-    if (xinc != 0 || yinc != 0 || zinc != 0) {
-	camera.setLocX(camerapos.x + xinc);
-	camera.setLocY(camerapos.y + yinc);
-	camera.setLocZ(camerapos.z + zinc);
-    }
+    // if (xinc != 0 || yinc != 0 || zinc != 0) {
+    // 	camera.setLocX(camerapos.x + xinc);
+    // 	camera.setLocY(camerapos.y + yinc);
+    // 	camera.setLocZ(camerapos.z + zinc);
+    // }
 
-    if (rot != 0) {
-	camera.setRotY(camera.getRotY() + rot);
-    }
+    // if (rot != 0) {
+    // 	camera.setRotY(camera.getRotY() + rot);
+    //}
 
-    checkmove();
-
+checkmove();
 
     // make wclients precense move also
     //var rotz = getAttr({'id': myid, 'component': 'EC_Placeable', 'keys': ['rotz']})[0] + rot;

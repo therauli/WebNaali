@@ -32,6 +32,11 @@ function isin(value, list) {
 
 function checkmove() {
 
+    /*
+      Does not work well except for walking and stopping. Need to
+      rethink how keyboard mapping should be done.
+     */
+
     for (i in moves) {
 	var move = moves[i];
 	if (!(isin(move, old_moves))) {
@@ -48,7 +53,7 @@ function checkmove() {
 	    action = move.split(',')[0];
 	    if (action == 'Rotate') {
 		action = 'StopRotate';
-	    } else {
+	    } else if (action == 'Move') {
 		action = 'Stop';
 	    }
 	    
