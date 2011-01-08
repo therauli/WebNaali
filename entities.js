@@ -22,7 +22,7 @@ function Entity(id) {
 	this.componentName = 'EC_Mesh';
 
 	this.parent = params['id'];
-
+	
 	this.url = params['url']
 	
 	if (this.url) {
@@ -82,13 +82,17 @@ function setAttr(params) {
 	if (entities[id].components[comp].componentName == component) {
 	    // console.log('FOUND corresponding component')
 
+	    //Joins componenst. A bit silly... (this comment came
+	    //second in the World's most useless comments in the world
+	    //competition of 2011
+
 	    jQuery.extend(entities[id].components[comp], params);
 	    if (component == 'EC_Placeable') {
 		// console.log('IS PLACEABLE')
 		for (child in scene.children) {
-		    // console.log('CHILD: ' + child);
 		    var collada = scene.children[child];
 		    if (collada.getId() == id) {
+			console.log('found ' + id)
 			var transform = params['Transform'];
 			x = transform[0]
 			y = transform[1]
@@ -105,9 +109,9 @@ function setAttr(params) {
 			if (rotx)
 			    collada.setRotX(rotx);
 			if (roty)
-			    collada.setRotX(roty);
+			    collada.setRotY(roty);
 			if (rotz)
-			    collada.setRotX(rotz);
+			    collada.setRotZ(rotz);
 			
 		    }
 		}
