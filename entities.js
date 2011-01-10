@@ -52,12 +52,30 @@ function addEntity(params) {
 	entities[id] = new Entity(id);
 }
 
+function removeEntity(params) {
+    var id = params['id'];
+    for (c = 0; c < scene.children.length; c++) {
+	if (scene.children[c].getId() == id) {
+	    scene.children.splice(c, 1);
+	    break;
+	}
+    }
+    delete entities[id];
+}
+
 function addComponent(params) {
     id = params['id']
 
     var newComponent = params['component'];
 
     var component;
+
+
+    // WS does not have any fancy sync state stuff so if we get an
+    // addcomponent message for an entity that hasn't been created yet
+    // we'll just add a new entity. This is not the way to go.
+    if (!entities[id])
+	addEntity({id: id})
 
     if (Components[newComponent]) {
 	//FIXME check that entity does not already have a mesh. Should
@@ -97,7 +115,7 @@ function setAttr(params) {
 		for (child in scene.children) {
 		    var collada = scene.children[child];
 		    if (collada.getId() == id) {
-			console.log('found ' + id)
+
 			var transform = params['Transform'];
 			x = transform[0];
 			y = transform[1];
@@ -146,12 +164,12 @@ function getAttr(params) {
     }
     return values
 }
-var data
+
 function loadScene(params) {
     var xmlstring = params['xml'];
     var scenexml = (new DOMParser()).parseFromString(xmlstring, "text/xml");
 
-    data = {};
+    var data = {};
 
     var loadentities = scenexml.getElementsByTagName("entity")
 
