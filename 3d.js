@@ -134,7 +134,7 @@ function checkkeys() {
     // 	camera.setRotY(camera.getRotY() + rot);
     //}
 
-checkmove();
+    checkmove();
 
     // make wclients precense move also
     //var rotz = getAttr({'id': myid, 'component': 'EC_Placeable', 'keys': ['rotz']})[0] + rot;

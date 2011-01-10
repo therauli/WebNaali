@@ -1,3 +1,8 @@
+/* Entity stuff is here
+   TODO:
+   * Get camera to better position
+*/
+
 entities = {};
 
 function Entity(id) {
@@ -85,7 +90,7 @@ function setAttr(params) {
 	    //Joins componenst. A bit silly... (this comment came
 	    //second in the World's most useless comments in the world
 	    //competition of 2011
-
+	    
 	    jQuery.extend(entities[id].components[comp], params);
 	    if (component == 'EC_Placeable') {
 		// console.log('IS PLACEABLE')
@@ -94,12 +99,12 @@ function setAttr(params) {
 		    if (collada.getId() == id) {
 			console.log('found ' + id)
 			var transform = params['Transform'];
-			x = transform[0]
-			y = transform[1]
-			z = transform[2]
-			rotx = transform[3]
-			roty = transform[4]
-			rotz = transform[5]
+			x = transform[0];
+			y = transform[1];
+			z = transform[2];
+			rotx = transform[3] * Math.PI / 180;
+			roty = transform[5] * Math.PI / 180;
+			rotz = transform[4] * Math.PI / 180;
 			if (x)
 			    collada.setLocX(x);
 			if (y)
@@ -112,7 +117,12 @@ function setAttr(params) {
 			    collada.setRotY(roty);
 			if (rotz)
 			    collada.setRotZ(rotz);
-			
+
+			if (id == myid) {
+			    // sync Camera
+			    camera.setLoc(x, y, z+2);
+			    camera.setRot(Math.PI/2, roty + 3*Math.PI/2, rotz);
+			}
 		    }
 		}
 	    }
