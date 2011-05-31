@@ -28,7 +28,7 @@ function initGraffa() {
     canvas.onmoiseout = function(event) {
 	mouseovercanvas = false;
     }
-
+1
     renderer = new GLGE.Renderer(canvas);
     scene = new GLGE.Scene();
 
@@ -41,10 +41,10 @@ function initGraffa() {
 
     camera = new GLGE.Camera();
 
-    camera.setLoc(131.806, 48.9571, 28.7691)
+    camera.setLoc(0, 0, 0)
     camera.setRotOrder(GLGE.ROT_XYZ);
     camera.setType(GLGE.C_PERSPECTIVE);
-    camera.setRot(1.57, 0, 0);
+    camera.setRot(0, 0, 0);
 
     scene.setCamera(camera); 
     startRender()
@@ -75,11 +75,11 @@ function checkkeys() {
     var mat = camera.getRotMatrix();
     
     var trans = GLGE.mulMat4Vec4(mat, [0, 0, -1, 1]);
-    var magnitude = Math.pow(Math.pow(trans[0], 2) + Math.pow(trans[1], 2), 0,5);
-
+    var magnitude = Math.sqrt(Math.pow(trans[0], 2) + Math.pow(trans[2], 2));
+    
     trans[0] = trans[0] / magnitude;
-    trans[1] = trans[1] / magnitude;
-
+    trans[2] = trans[2] / magnitude;
+    
     var yinc = 0;
     var xinc = 0;
     var zinc = 0;
@@ -87,58 +87,36 @@ function checkkeys() {
     var rot = 0;
  
     if (keys.isKeyPressed(GLGE.KI_PAGE_UP)) {
-	zinc = 1;
+	yinc = 1;
     }
     if (keys.isKeyPressed(GLGE.KI_PAGE_DOWN)) {
-	zinc = -1;
+	yinc = -1;
     }
     if (keys.isKeyPressed(GLGE.KI_W) || keys.isKeyPressed(GLGE.KI_UP_ARROW)) {
-	//xinc = xinc + parseFloat(trans[0]);
-	//yinc = yinc + parseFloat(trans[1]);
 	addmove('Move,forward');
-
     }
     if (keys.isKeyPressed(GLGE.KI_S) || keys.isKeyPressed(GLGE.KI_DOWN_ARROW)) {
-	//xinc = xinc - parseFloat(trans[0]);
-	//yinc = yinc - parseFloat(trans[1]);
 	addmove('Move,back');
-
     }
     if (keys.isKeyPressed(GLGE.KI_A)) {
-	//xinc = xinc - parseFloat(trans[1]);
-	//yinc = yinc + parseFloat(trans[0]);
 	addmove('Move,left');
     }
     if (keys.isKeyPressed(GLGE.KI_D)) {
-	//xinc = xinc + parseFloat(trans[1]);
-	//yinc = yinc - parseFloat(trans[0]);
 	addmove('Move,right');
     }
     if (keys.isKeyPressed(GLGE.KI_LEFT_ARROW)) {
-	//rot = 0.1;
 	addmove('Rotate,left');
 	
     }
     if (keys.isKeyPressed(GLGE.KI_RIGHT_ARROW)) {
-	//rot = -0.1;
 	addmove('Rotate,right');
     }
 
-    // if (xinc != 0 || yinc != 0 || zinc != 0) {
-    // 	camera.setLocX(camerapos.x + xinc);
-    // 	camera.setLocY(camerapos.y + yinc);
-    // 	camera.setLocZ(camerapos.z + zinc);
-    // }
-
-    // if (rot != 0) {
-    // 	camera.setRotY(camera.getRotY() + rot);
-    //}
-
     checkmove();
 
-    // make wclients precense move also
-    //var rotz = getAttr({'id': myid, 'component': 'EC_Placeable', 'keys': ['rotz']})[0] + rot;
-    //setAttr({id: myid, component: 'EC_Placeable', x: camerapos.x, y: camerapos.y, z: camerapos.z + 1, rotz: rotz});
+    //make wclients precense move also
+    var rotz = getAttr({'id': myid, 'component': 'EC_Placeable', 'keys': ['rotz']})[0] + rot;
+    setAttr({id: myid, component: 'EC_Placeable', x: camerapos.x, y: camerapos.y, z: camerapos.z + 1, rotz: rotz});
 }
 
 function checkmouse() {

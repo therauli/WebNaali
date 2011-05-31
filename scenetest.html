@@ -13,17 +13,59 @@
 <title>Scenetest</title> 
 
 <!-- GLGE stuff --> 
-<script type="text/javascript" src="glge/glge_math.js"></script>
-<script type="text/javascript" src="glge/glge.js"></script>
-<script type="text/javascript" src="glge/glge_input.js"></script>
-<script type="text/javascript" src="glge/glge_collada.js"></script>
+<script type="text/javascript" src="glge/src/core/glge_math.js"></script>
+<script type="text/javascript" src="glge/src/core/glge.js"></script>
+<script type="text/javascript" src="glge/src/core/glge_event.js"></script>
+<script type="text/javascript" src="glge/src/core/glge_quicknote.js"></script>
+<script type="text/javascript" src="glge/src/core/glge_animatable.js"></script>
+<script type="text/javascript" src="glge/src/core/glge_document.js"></script>
+<script type="text/javascript" src="glge/src/core/glge_placeable.js"></script>
+<script type="text/javascript" src="glge/src/core/glge_jsonloader.js"></script>
+<script type="text/javascript" src="glge/src/core/glge_group.js"></script>
+<script type="text/javascript" src="glge/src/core/glge_messages.js"></script>
+<script type="text/javascript" src="glge/src/animation/glge_action.js"></script>
+<script type="text/javascript" src="glge/src/animation/glge_actionchannel.js"></script>
+<script type="text/javascript" src="glge/src/animation/glge_animationcurve.js"></script>
+<script type="text/javascript" src="glge/src/animation/glge_animationvector.js"></script>
+<script type="text/javascript" src="glge/src/animation/glge_animationpoints.js"></script>
+<script type="text/javascript" src="glge/src/geometry/glge_mesh.js"></script>
+<script type="text/javascript" src="glge/src/material/glge_material.js"></script>
+<script type="text/javascript" src="glge/src/material/glge_materiallayer.js"></script>
+<script type="text/javascript" src="glge/src/material/glge_multimaterial.js"></script>
+<script type="text/javascript" src="glge/src/material/glge_texture.js"></script>
+<script type="text/javascript" src="glge/src/material/glge_texturecamera.js"></script>
+<script type="text/javascript" src="glge/src/material/glge_texturecanvas.js"></script>
+<script type="text/javascript" src="glge/src/material/glge_texturecube.js"></script>
+<script type="text/javascript" src="glge/src/material/glge_texturevideo.js"></script>
+<script type="text/javascript" src="glge/src/renderable/glge_lod.js"></script>
+<script type="text/javascript" src="glge/src/renderable/glge_object.js"></script>
+<script type="text/javascript" src="glge/src/renderable/glge_text.js"></script>
+<script type="text/javascript" src="glge/src/renders/glge_renderer.js"></script>
+<script type="text/javascript" src="glge/src/scene/glge_camera.js"></script>
+<script type="text/javascript" src="glge/src/scene/glge_light.js"></script>
+<script type="text/javascript" src="glge/src/scene/glge_scene.js"></script>
+<script type="text/javascript" src="glge/src/extra/glge_particles.js"></script>
+<script type="text/javascript" src="glge/src/extra/glge_filter2d.js"></script>
+<script type="text/javascript" src="glge/src/extra/filters/glge_filter_glow.js"></script>
+<script type="text/javascript" src="glge/src/extra/filters/glge_filter_ao.js"></script>
+<script type="text/javascript" src="glge/src/extra/glge_collada.js"></script>
+<script type="text/javascript" src="glge/src/extra/glge_input.js"></script>
+<script type="text/javascript" src="glge/src/extra/glge_wavefront.js"></script>
+<script type="text/javascript" src="glge/src/physics/glge_physicsext.js"></script>
+<script type="text/javascript" src="glge/src/physics/glge_physicsabstract.js"></script>
+<script type="text/javascript" src="glge/src/physics/glge_physicsbox.js"></script>
+<script type="text/javascript" src="glge/src/physics/glge_physicsmesh.js"></script>
+<script type="text/javascript" src="glge/src/physics/glge_physicsplane.js"></script>
+<script type="text/javascript" src="glge/src/physics/glge_physicssphere.js"></script>
+<script type="text/javascript" src="glge/src/physics/glge_physicsconstraintpoint.js"></script>
 
 <!-- jQuery -->
-<script type="text/javascript" src="jquery-1.4.3.js"></script>
+<script type="text/javascript" src="jquery/jquery-1.6.1.js"></script>
 
 <script type="text/javascript" src="global.js"></script>
 <script type="text/javascript" src="3d.js"></script>
 <script type="text/javascript" src="entities.js"></script>
+<script type="text/javascript" src="scenetest.js"></script>
 
 <!-- code for demo stuff -->
 <script type="text/javascript">
@@ -35,45 +77,12 @@ window.onload = function() {
     lobby = new GLGE.Collada();
 
     lobby.setId("aula");
-    lobby.setDocument("http://localhost:8000/WebNaali/aula/aula_v8a.dae");
+    lobby.setDocument("http://localhost:8000/aula/aula_v8a.dae");
     
     //lobby.setDrawType(GLGE.DRAW_LINESTRIPS);
 
-    lobby.setLoc(127, 127, 0);
+    lobby.setLoc(0, 0, 0);
     scene.addCollada(lobby);
-
-    var ovi = new GLGE.Collada();
-
-    ovi.setId("Ovi");
-
-    ovi.setDocument("http://localhost:8000/WebNaali/man2.dae");
-    // var actions = ovi.addColladaAction();
-    // var actions= Mycollada.addColladaAction();
-    // Mycollada.setAction(actions[{collada clip id},{blendtime},{loop?});
-
-    // But since there aren’t that many exports that support animclips
-    // you can also define frames: 0-30 walk 31-91 ideal. Simply set
-    // the number of frames and start frame, ie to set the ideal:
-
-    // Mycollada.setFrames(60);
-    // Mycollada.setStartFrame(31,{blendtime},{loop?});
-    ovi.setFrames(60)
-    ovi.setStartFrame(1, 3, 1);
-
-    scene.addCollada(ovi);
-
-
-    setId({id: 1});
-
-    addEntity({id: 1})
-    addComponent({id: 1, component: "EC_Mesh", url: "http://localhost:8000/WebNaali/ankka.dae"});
-    addComponent({id: 1, component: "EC_Placeable", x: 131.806, y: 48.9571, z: 28.7691, rotx: 1.57, roty: 0, rotz: 0});
-    
-    addEntity({id: 2});
-    addComponent({id: 2, component: "EC_Mesh", url: "http://localhost:8000/WebNaali/ankka.dae"});
-    addComponent({id: 2, component: "EC_Placeable", x: 93.5850172746437, y: 34.89469801795778, z: 28.7691, rotx: 1.57, roty: -6.5999999999999925, rotz: 0});
-
-    loadScene(ent_data);
 
     startRender();
 };
