@@ -27,8 +27,8 @@ function checkkeys() {
 	yinc = -1;
     }
     if (keys.isKeyPressed(GLGE.KI_W) || keys.isKeyPressed(GLGE.KI_UP_ARROW)) {
-	xinc = xinc - parseFloat(trans[0]);
-	zinc = zinc - parseFloat(trans[2]);
+	xinc = xinc + parseFloat(trans[0]);
+	zinc = zinc + parseFloat(trans[2]);
     }
     if (keys.isKeyPressed(GLGE.KI_S) || keys.isKeyPressed(GLGE.KI_DOWN_ARROW)) {
 	xinc = xinc - parseFloat(trans[0]);
