@@ -77,7 +77,8 @@ window.onload = function() {
     lobby = new GLGE.Collada();
 
     lobby.setId("aula");
-    lobby.setDocument("http://localhost:8000/aula/aula_v8a.dae");
+    //lobby.setDocument("http://localhost:8000/aula/aula_v8a.dae");
+    lobby.setDocument("majbacka/livingroom__day.dae");
     
     //lobby.setDrawType(GLGE.DRAW_LINESTRIPS);
 
@@ -92,23 +93,21 @@ window.onload = function() {
 </head>
 
 <body>
-<h1>WebGL scenetest</h1>
+<!-- <h1>WebGL scenetest</h1 -->
 
 <div id="container">
-  <canvas id="graffa" width="400" height="400">
+  <canvas id="graffa" width="1024" height="768">
     This text is displayed if your browser does not support HTML5 Canvas.
     </canvas>
     <div id="info">
   </div>
-  <br>
   <div id="fps"></div>
-  <br>
   <div id="debug"></div>
 </div>
-<p id="buttons">
+<!--p id="buttons">
 Kek plop
 <button onclick='clearInterval(rendertimerid)'>Stop rendering</button>
-</p>
+</p-->
 
 </body>
 </html>

@@ -44,18 +44,18 @@ function checkkeys() {
 	zinc = zinc + parseFloat(trans[0]);
     }
     if (keys.isKeyPressed(GLGE.KI_LEFT_ARROW)) {
-	rot = 0.1;
+	rot = 0.03;
 	
     }
     if (keys.isKeyPressed(GLGE.KI_RIGHT_ARROW)) {
-	rot = -0.1;
+	rot = -0.03;
     }
 
     if (xinc != 0 || yinc != 0 || zinc != 0) {
-
-    	camera.setLocX(camerapos.x + xinc);
-    	camera.setLocY(camerapos.y + yinc);
-    	camera.setLocZ(camerapos.z + zinc);
+	var movediv = 7;
+    	camera.setLocX(camerapos.x + (xinc / movediv));
+    	camera.setLocY(camerapos.y + (yinc / movediv));
+    	camera.setLocZ(camerapos.z + (zinc / movediv));
     }
 
     if (rot != 0) {
