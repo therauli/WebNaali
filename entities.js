@@ -115,8 +115,7 @@ function setAttr(params) {
 		for (child in scene.children) {
 		    var collada = scene.children[child];
 		    if (collada.getId() == id) {
-
-			var transform = params['Transform'];
+			var transform = params['Transform'] || [0,0,0,0,0,0];
 			x = transform[0];
 			y = transform[1];
 			z = transform[2];
@@ -135,11 +134,12 @@ function setAttr(params) {
 			    collada.setRotY(roty);
 			if (rotz)
 			    collada.setRotZ(rotz);
-
+			
 			if (id == myid) {
+			    console.log('SYNCNCNCNCN');
 			    // sync Camera
-			    camera.setLoc(x, y, z+2);
-			    camera.setRot(Math.PI/2, roty + 3*Math.PI/2, rotz);
+			    camera.setLoc(x, y, z);
+			    camera.setRot(rotx, roty, rotz);
 			}
 		    }
 		}
@@ -219,8 +219,9 @@ function loadScene(params) {
 		console.log('MESH')
 		addComponent({id: id,
 			      component: component,
-			      url: 'ankka.dae'}); 
-	    }
+			      url: data[id][component]['Mesh ref']});
+	    } 
+	    
 	}
     }
 }

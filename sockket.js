@@ -14,7 +14,7 @@ ws.onopen = function() {
 };
 
 ws.onmessage = function (evt) {
-    console.log('Got message: ' + evt.data);
+    //console.log('Got message: ' + evt.data);
     parseMessage(evt.data);
 };
 

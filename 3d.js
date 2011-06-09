@@ -15,6 +15,7 @@ var start=parseInt(new Date().getTime());
 var now;
 
 function initGraffa() {
+
     canvas = document.getElementById('graffa');
 
     canvas.onmouseover = function(event) {
@@ -28,9 +29,16 @@ function initGraffa() {
     canvas.onmoiseout = function(event) {
 	mouseovercanvas = false;
     }
-1
+
     renderer = new GLGE.Renderer(canvas);
     scene = new GLGE.Scene();
+
+
+    // temp testing
+    room = new GLGE.Collada();
+    room.setId("Livingroom_static");
+    room.setDocument("majbacka/livingroom__day.dae");
+    scene.addCollada(room);
 
     keys = new GLGE.KeyInput();
     mouse = new GLGE.MouseInput(canvas);
@@ -44,7 +52,7 @@ function initGraffa() {
     camera.setLoc(-4.454, 2.0, 3.661);
     camera.setRotOrder(GLGE.ROT_XYZ);
     camera.setType(GLGE.C_PERSPECTIVE);
-    camera.setRot(0, -7.0, 0);
+    camera.setRot(0, 0.0, 0);
 
     scene.setCamera(camera); 
     startRender()
@@ -70,27 +78,12 @@ function render() {
 }
 
 function checkkeys() {
-    var camerapos = camera.getPosition();
-    var camerarot = camera.getRotation();
-    var mat = camera.getRotMatrix();
-    
-    var trans = GLGE.mulMat4Vec4(mat, [0, 0, -1, 1]);
-    var magnitude = Math.sqrt(Math.pow(trans[0], 2) + Math.pow(trans[2], 2));
-    
-    trans[0] = trans[0] / magnitude;
-    trans[2] = trans[2] / magnitude;
-    
-    var yinc = 0;
-    var xinc = 0;
-    var zinc = 0;
-    
-    var rot = 0;
  
     if (keys.isKeyPressed(GLGE.KI_PAGE_UP)) {
-	yinc = 1;
+	// FIXME
     }
     if (keys.isKeyPressed(GLGE.KI_PAGE_DOWN)) {
-	yinc = -1;
+	// SAmma här
     }
     if (keys.isKeyPressed(GLGE.KI_W) || keys.isKeyPressed(GLGE.KI_UP_ARROW)) {
 	addmove('Move,forward');
@@ -106,7 +99,6 @@ function checkkeys() {
     }
     if (keys.isKeyPressed(GLGE.KI_LEFT_ARROW)) {
 	addmove('Rotate,left');
-	
     }
     if (keys.isKeyPressed(GLGE.KI_RIGHT_ARROW)) {
 	addmove('Rotate,right');
@@ -114,9 +106,6 @@ function checkkeys() {
 
     checkmove();
 
-    //make wclients precense move also
-    var rotz = getAttr({'id': myid, 'component': 'EC_Placeable', 'keys': ['rotz']})[0] + rot;
-    setAttr({id: myid, component: 'EC_Placeable', x: camerapos.x, y: camerapos.y, z: camerapos.z + 1, rotz: rotz});
 }
 
 function checkmouse() {
