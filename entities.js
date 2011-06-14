@@ -134,12 +134,11 @@ function setAttr(params) {
 			    collada.setRotY(roty);
 			if (rotz)
 			    collada.setRotZ(rotz);
-			
+
 			if (id == myid) {
-			    console.log('SYNCNCNCNCN');
 			    // sync Camera
-			    camera.setLoc(x, y, z);
-			    camera.setRot(rotx, roty, rotz);
+			    camera.setLoc(x, y + 2, z);
+			    camera.setRot(rotx, roty - Math.PI / 2, rotz);
 			}
 		    }
 		}

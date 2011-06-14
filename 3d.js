@@ -49,10 +49,8 @@ function initGraffa() {
 
     camera = new GLGE.Camera();
 
-    camera.setLoc(-4.454, 2.0, 3.661);
-    camera.setRotOrder(GLGE.ROT_XYZ);
+    //camera.setRotOrder(GLGE.ROT_XYZ);
     camera.setType(GLGE.C_PERSPECTIVE);
-    camera.setRot(0, 0.0, 0);
 
     scene.setCamera(camera); 
     startRender()

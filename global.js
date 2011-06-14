@@ -65,7 +65,7 @@ function checkmove() {
     }
 
     old_moves = moves.slice(0);
-    moves = new Array();
+    moves = [];
 }
 
 
