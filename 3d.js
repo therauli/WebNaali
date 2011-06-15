@@ -121,10 +121,8 @@ function checkmouse() {
 
 	    var dx = old_mousex - mouseposition.x;
 	    if (dx < 0) {
-		console.log('right');
 		addmove('Rotate,right');
 	    } else if (dx > 0) {
-		addmove('Rotate,left');
 		console.log('left');
 	    }
 	

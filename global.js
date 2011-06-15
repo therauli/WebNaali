@@ -11,6 +11,8 @@ var timerid;
 var moves = new Array()
 var old_moves = new Array()
 
+
+var rightMouseDown = false;
 var old_mousex = 0.0;
 var old_mousey = 0.0; 
 
