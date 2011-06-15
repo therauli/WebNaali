@@ -106,9 +106,6 @@ function sendSignal(signal) {
     var action = signal.split(':')[0];
     var id = signal.split(':')[1];
     console.log('sending: ' + action + ' to ' + id);
-
-    
-    
 }
 
 function connectHandler(signal, id) {

@@ -115,30 +115,25 @@ function setAttr(params) {
 		for (child in scene.children) {
 		    var collada = scene.children[child];
 		    if (collada.getId() == id) {
-			var transform = params['Transform'] || [0,0,0,0,0,0];
-			x = transform[0];
-			y = transform[1];
-			z = transform[2];
-			rotx = transform[3] * Math.PI / 180;
-			roty = transform[5] * Math.PI / 180;
-			rotz = transform[4] * Math.PI / 180;
-			if (x)
-			    collada.setLocX(x);
-			if (y)
-			    collada.setLocY(y);
-			if (z)
-			    collada.setLocZ(z);
-			if (rotx)
-			    collada.setRotX(rotx);
-			if (roty)
-			    collada.setRotY(roty);
-			if (rotz)
-			    collada.setRotZ(rotz);
+			var transform = params['Transform'];
+			var x = transform[0];
+			var y = transform[2];
+			var z = -transform[1];
+			var rotx = transform[3] * Math.PI / 180;
+			var roty = transform[5] * Math.PI / 180;
+			var rotz = -transform[4] * Math.PI / 180;
+			
+			collada.setLocX(x);
+			collada.setLocY(y);
+			collada.setLocZ(z);
+			collada.setRotX(rotx);
+			collada.setRotY(roty);
+			collada.setRotZ(rotz);
 
 			if (id == myid) {
 			    // sync Camera
-			    camera.setLoc(x, y + 2, z);
-			    camera.setRot(rotx, roty - Math.PI / 2, rotz);
+			    camera.setLoc(x, y + 1.5, z);
+			    camera.setRot(rotx, roty + 3 * Math.PI / 2, rotz);
 			}
 		    }
 		}
