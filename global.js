@@ -11,6 +11,9 @@ var timerid;
 var moves = new Array()
 var old_moves = new Array()
 
+var old_mousex = 0.0;
+var old_mousey = 0.0; 
+
 var handlers = {};
 
 function setId() {
@@ -106,6 +109,9 @@ function sendSignal(signal) {
     var action = signal.split(':')[0];
     var id = signal.split(':')[1];
     console.log('sending: ' + action + ' to ' + id);
+
+    
+    
 }
 
 function connectHandler(signal, id) {

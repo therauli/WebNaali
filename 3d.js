@@ -26,7 +26,7 @@ function initGraffa() {
 	mouseovercanvas = true;
     }
 
-    canvas.onmoiseout = function(event) {
+    canvas.onmouseout = function(event) {
 	mouseovercanvas = false;
     }
 
@@ -63,7 +63,7 @@ function startRender() {
 function render() {
     renderer.render();
     checkkeys();
-    //checkmouse();
+    checkmouse();
 
     now=parseInt(new Date().getTime());
     frameratebuffer = Math.round(((frameratebuffer * 9) + 1000/ (now - lasttime)) / 10);
@@ -78,10 +78,10 @@ function render() {
 function checkkeys() {
  
     if (keys.isKeyPressed(GLGE.KI_PAGE_UP)) {
-	// FIXME
+	addmove('Move,up');
     }
     if (keys.isKeyPressed(GLGE.KI_PAGE_DOWN)) {
-	// SAmma här
+	addmove('Move,down');
     }
     if (keys.isKeyPressed(GLGE.KI_W) || keys.isKeyPressed(GLGE.KI_UP_ARROW)) {
 	addmove('Move,forward');
@@ -113,30 +113,20 @@ function checkmouse() {
 	mouseposition.y -= document.getElementById("container").offsetTop;
 	
 	if (mouseposition.x && mouseposition.y) {
-	    object = scene.pick(mouseposition.x, mouseposition.y).object
-	    if (!object) {
-		if (hoverobject) {
-		    hoverobject.setScale(1);
-		    document.getElementById("debug").innerHTML = "";
-		}
-	    } else {
-		var temp_object = object;
-		while (1) {
-		    // We hit the mother load
-		    if (temp_object.parent === scene) {
-			if (mouse.isButtonDown(GLGE.MI_LEFT)) {
-			    document.getElementById("debug").innerHTML = "Activate: " + temp_object.getId();
-			    sendSignal('mouseClicked:'+temp_object.getId());
-			} else {
-			    sendSignal('mouseHover:'+temp_object.getId());
-			    document.getElementById("debug").innerHTML = "Hover: " + temp_object.getId();
-			}
-			break;
-		    }
-		    temp_object = temp_object.parent
-		}
+
+	    var dx = old_mousex - mouseposition.x;
+	    if (dx < 0) {
+		console.log('right');
+		addmove('Rotate,right');
+	    } else if (dx > 0) {
+		addmove('Rotate,left');
+		console.log('left');
 	    }
-	    hoverobject = object;
+	
+	    old_mousex = mouseposition.x;
+	    old_mousey = mouseposition.y;
+
+
 	}
     }
 }

@@ -78,11 +78,8 @@ window.onload = function() {
     lobby = new GLGE.Collada();
 
     lobby.setId("aula");
-    //lobby.setDocument("http://localhost:8000/aula/aula_v8a.dae");
     lobby.setDocument("majbacka/livingroom__day.dae");
     
-    //lobby.setDrawType(GLGE.DRAW_LINESTRIPS);
-
     lobby.setLoc(0, 0, 0);
     scene.addCollada(lobby);
 
@@ -97,7 +94,7 @@ window.onload = function() {
 <!-- <h1>WebGL scenetest</h1 -->
 
 <div id="container">
-  <canvas id="graffa" width="1024" height="768">
+  <canvas id="graffa" width="400" height="400"">
     This text is displayed if your browser does not support HTML5 Canvas.
     </canvas>
     <div id="info">

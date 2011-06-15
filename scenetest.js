@@ -63,3 +63,31 @@ function checkkeys() {
     }
 
 }
+
+function checkmouse() {
+    var mouseposition = mouse.getMousePosition();
+    mouseposition.x -= document.getElementById("container").offsetLeft;
+    mouseposition.y -= document.getElementById("container").offsetTop;
+    var rot = 0;
+   
+    if (mouseposition.x && mouseposition.y) {
+
+	var dx = old_mousex - mouseposition.x;
+	if (dx < 0) {
+	    console.log('right');
+	    rot = -0.03;
+	} else if (dx > 0) {
+	    rot = 0.03;
+	    console.log('left');
+	}
+	
+	if (rot != 0) {
+    	    camera.setRotY(camera.getRotY() + rot);
+	}
+
+
+	old_mousex = mouseposition.x;
+	old_mousey = mouseposition.y;
+    }
+    
+}
