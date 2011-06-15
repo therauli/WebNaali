@@ -20,14 +20,19 @@ function initGraffa() {
 
     canvas.onmouseover = function(event) {
 	mouseovercanvas = true;
-    }
+    };
 
     canvas.onmousemove = function(event) {
 	mouseovercanvas = true;
-    }
+    };
 
     canvas.onmouseout = function(event) {
 	mouseovercanvas = false;
+    };
+
+    //disable context menu for canvas
+    canvas.oncontextmenu = function(event) {
+	return false;
     }
 
     renderer = new GLGE.Renderer(canvas);
@@ -112,7 +117,7 @@ function checkmouse() {
 	mouseposition.x -= document.getElementById("container").offsetLeft;
 	mouseposition.y -= document.getElementById("container").offsetTop;
 	
-	if (mouseposition.x && mouseposition.y) {
+	if (mouse.isButtonDown(GLGE.MI_RIGHT) & mouseposition.x && mouseposition.y) {
 
 	    var dx = old_mousex - mouseposition.x;
 	    if (dx < 0) {

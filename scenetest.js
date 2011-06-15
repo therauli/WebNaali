@@ -70,7 +70,7 @@ function checkmouse() {
     mouseposition.y -= document.getElementById("container").offsetTop;
     var rot = 0;
    
-    if (mouseposition.x && mouseposition.y) {
+    if (mouse.isButtonDown(GLGE.MI_RIGHT) && mouseposition.x && mouseposition.y) {
 
 	var dx = old_mousex - mouseposition.x;
 	if (dx < 0) {
