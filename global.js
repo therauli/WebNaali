@@ -111,12 +111,21 @@ function sendSignal(signal) {
     var action = signal.split(':')[0];
     var id = signal.split(':')[1];
     console.log('sending: ' + action + ' to ' + id);
-
-    
     
 }
 
 function connectHandler(signal, id) {
     handlers[signal] = handlers[signal] || [];
     handlers[signal].push(id);
+}
+
+function chatMessage(params) {
+    var sender = params['sender'];
+    var message = params['msg'];
+    console.log('GOT MESSAGE ' + sender + ": " + message);
+    //FIXME use jquery or somthing smart to do this.
+    var content = "";
+    content = document.getElementById("chat").innerHTML;
+    content = content.concat("<b>" + sender + ":</b> " + message + "<br>");
+    document.getElementById("chat").innerHTML = content;
 }
