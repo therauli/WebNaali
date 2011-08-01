@@ -132,10 +132,13 @@ function chatMessage(params) {
 
 window.onload = function() {
     $('#chatinput').submit(function () {
-	var message = $('#usermsg').val()
+	var message = $('#usermsg').val();
+	$(':text', '#chatinput').val('');
+	if (message.trim() == "") {
+	    return false;
+	}
 	console.log(message);
 	ws.send(JSON.stringify(["chatMessage", {sender: "WebSocket", msg: message}]));
-	$(':input','#chatinput').val('');
 	return false;
     });
 }
