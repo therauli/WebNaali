@@ -29,11 +29,13 @@ function Entity(id) {
 	this.parent = params['id'];
 	
 	this.url = params['url']
-	
+	//FIXME
+	this.url = "http://localhost:8000/Jack.dae";
 	if (this.url) {
 	    this.mesh = new GLGE.Collada();
 	    this.mesh.setId(this.parent);
 	    this.mesh.setDocument(this.url);
+	    this.mesh.setRotY(3 * Math.PI / 2);
 	    scene.addObject(this.mesh);
 	}
     }
@@ -111,7 +113,7 @@ function setAttr(params) {
 	    
 	    jQuery.extend(entities[id].components[comp], params);
 	    if (component == 'EC_Placeable') {
-		// console.log('IS PLACEABLE')
+		//console.log('IS PLACEABLE')
 		for (child in scene.children) {
 		    var collada = scene.children[child];
 		    if (collada.getId() == id) {
@@ -127,7 +129,7 @@ function setAttr(params) {
 			collada.setLocY(y);
 			collada.setLocZ(z);
 			collada.setRotX(rotx);
-			collada.setRotY(roty);
+			collada.setRotY(roty + 3 * Math.PI / 2);
 			collada.setRotZ(rotz);
 
 			if (id == myid) {
@@ -160,6 +162,8 @@ function getAttr(params) {
 }
 
 function loadScene(params) {
+    // FIXME
+    return;
     var xmlstring = params['xml'];
     var scenexml = (new DOMParser()).parseFromString(xmlstring, "text/xml");
 
@@ -209,12 +213,12 @@ function loadScene(params) {
 		addComponent({id: id,
 			      component: component,
 			      transform: data[id][component]['Transform'].split(',')});
-	    } else if (component == 'EC_Mesh') {
-		console.log('MESH')
-		addComponent({id: id,
-			      component: component,
-			      url: data[id][component]['Mesh ref']});
-	    } 
+	    } // else if (component == 'EC_Mesh') {
+	    // 	console.log('MESH');
+	    // 	addComponent({id: id,
+	    // 		      component: component,
+	    // 		      url: data[id][component]['Mesh ref']});
+	    // } 
 	    
 	}
     }

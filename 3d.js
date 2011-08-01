@@ -41,8 +41,8 @@ function initGraffa() {
 
     // temp testing
     room = new GLGE.Collada();
-    room.setId("Livingroom_static");
-    room.setDocument("majbacka/livingroom__day.dae");
+    room.setId("aula_static");
+    room.setDocument("aula2_rmx.dae");
     scene.addCollada(room);
 
     keys = new GLGE.KeyInput();
@@ -81,6 +81,10 @@ function render() {
 }
 
 function checkkeys() {
+    if (!mouseovercanvas) {
+	return;
+    }
+
  
     if (keys.isKeyPressed(GLGE.KI_PAGE_UP)) {
 	addmove('Move,up');
