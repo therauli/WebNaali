@@ -40,10 +40,7 @@ function initGraffa() {
 
 
     // temp testing
-    room = new GLGE.Collada();
-    room.setId("aula_static");
-    room.setDocument("aula2_rmx.dae");
-    scene.addCollada(room);
+    //room = new GLGE.Collada();
 
     keys = new GLGE.KeyInput();
     mouse = new GLGE.MouseInput(canvas);
@@ -54,7 +51,6 @@ function initGraffa() {
 
     camera = new GLGE.Camera();
 
-    //camera.setRotOrder(GLGE.ROT_XYZ);
     camera.setType(GLGE.C_PERSPECTIVE);
 
     scene.setCamera(camera); 
@@ -72,9 +68,9 @@ function render() {
 
     now=parseInt(new Date().getTime());
     frameratebuffer = Math.round(((frameratebuffer * 9) + 1000/ (now - lasttime)) / 10);
-    document.getElementById("fps").innerHTML = "FPS: " + frameratebuffer+ " #obj: " + scene.getObjects().length;
+    //document.getElementById("fps").innerHTML = "FPS: " + frameratebuffer+ " #obj: " + scene.getObjects().length;
 
-    document.getElementById("info").innerHTML="Camera:" + camera.getLocX() +", " + camera.getLocY() + ", " + camera.getLocZ() + " : " + camera.getRotX() + ", " + camera.getRotY() + ", " + camera.getRotZ();
+    //document.getElementById("info").innerHTML="Camera:" + camera.getLocX() +", " + camera.getLocY() + ", " + camera.getLocZ() + " : " + camera.getRotX() + ", " + camera.getRotY() + ", " + camera.getRotZ();
 
 
     lasttime = now;
@@ -127,13 +123,11 @@ function checkmouse() {
 	    if (dx < 0) {
 		addmove('Rotate,right');
 	    } else if (dx > 0) {
-		console.log('left');
+		addmove('Rotate,left');
 	    }
 	
 	    old_mousex = mouseposition.x;
 	    old_mousey = mouseposition.y;
-
-
 	}
     }
 }

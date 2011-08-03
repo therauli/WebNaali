@@ -47,7 +47,7 @@ function checkmove() {
 	if (!(isin(move, old_moves))) {
 	    action = move.split(',')[0];
 	    dir = move.split(',')[1];
-	    console.log('MOVE ' + move);
+	    //console.log('MOVE ' + move);
 	    ws.send(JSON.stringify(["Action", {action: action, params: [dir], id: myid}]));
 	}
     }
@@ -64,7 +64,7 @@ function checkmove() {
 	    
 	    dir = move.split(',')[1];
 
-	    console.log('STOP ' + move);
+	    //console.log('STOP ' + move);
 	    ws.send(JSON.stringify(["Action", {action: action, params: dir, id: myid}]));
 	}
     }
@@ -73,44 +73,10 @@ function checkmove() {
     moves = [];
 }
 
-
-//Obsolete:
-function Door(id) {
-    this.id = id;
-    this.locked = false;
-    this.opened = false;
-
-    this.mouseClicked = function() {
-	if (this.locked) {
-	    console.log('Door is locked')
-	} else {
-	    this.opened = !this.opened
-	    console.log('Door is now ' + this.opened)
-
-	    // Get the corresponding GLGE Collada object
-	    var object;
-	    var children = scene.getChildren();
-	    var i = 0;
-	    for (i; i < children.length; i++) {
-		if (children[i].id == this.id) {
-		    object = children[i];
-		    break
-		}
-	    }
-	}
-	console.log(object);
-	updateObject(id, {locked: this.locked, opened: this.opened, position: [object.getLocX(), object.getLocY(), object.getLocX()]});
-    }
-    this.mouseHover = function() {
-	console.log(this + ' is locked: ' + this.locked + ' and is opened: ' + this.opened);
-
-    }
-}
-
 function sendSignal(signal) {
     var action = signal.split(':')[0];
     var id = signal.split(':')[1];
-    console.log('sending: ' + action + ' to ' + id);
+    //console.log('sending: ' + action + ' to ' + id);
     
 }
 
@@ -122,7 +88,7 @@ function connectHandler(signal, id) {
 function chatMessage(params) {
     var sender = params['sender'];
     var message = params['msg'];
-    console.log('GOT MESSAGE ' + sender + ": " + message);
+    //console.log('GOT MESSAGE ' + sender + ": " + message);
     //FIXME use jquery or somthing smart to do this.
     var content = "";
     content = document.getElementById("chat").innerHTML;
@@ -137,7 +103,7 @@ window.onload = function() {
 	if (message.trim() == "") {
 	    return false;
 	}
-	console.log(message);
+	//console.log(message);
 	ws.send(JSON.stringify(["chatMessage", {sender: "WebSocket", msg: message}]));
 	return false;
     });
