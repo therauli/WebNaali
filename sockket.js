@@ -4,7 +4,7 @@ Stuff to handle WebSocket communication
 
 */
 
-var ws = new WebSocket("ws://127.0.0.1:9999");
+var ws = new WebSocket("ws://" + websocket_host + ":" + websocket_port);
 
 ws.onopen = function() {
     var data = ["CONNECTED", {}];

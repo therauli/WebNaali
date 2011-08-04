@@ -40,7 +40,10 @@ function initGraffa() {
 
 
     // temp testing
-    //room = new GLGE.Collada();
+    var static_scene = new GLGE.Collada();
+    static_scene.setDocument(url_to_static);
+    static_scene.docURL = "/";
+    scene.addCollada(static_scene);
 
     keys = new GLGE.KeyInput();
     mouse = new GLGE.MouseInput(canvas);
