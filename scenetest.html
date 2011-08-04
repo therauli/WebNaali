@@ -72,16 +72,9 @@
 <script type="text/javascript">
 
 window.onload = function() {
+    url_to_static = "aula2_rmx.dae";
 
     initGraffa();
-
-    lobby = new GLGE.Collada();
-
-    lobby.setId("aula");
-    lobby.setDocument("aula2_rmx.dae");
-    
-    lobby.setLoc(0, 0, 0);
-    scene.addCollada(lobby);
 
     startRender();
 };
