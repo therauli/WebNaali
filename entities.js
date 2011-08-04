@@ -138,7 +138,7 @@ function setAttr(params) {
 			collada.setLocX(x);
 			collada.setLocY(y);
 			collada.setLocZ(z);
-			collada.setRotX(rotx);
+			collada.setRotX(rotx - Math.PI / 2);
 			collada.setRotY(roty + 3 * Math.PI / 2);
 			collada.setRotZ(rotz);
 
