@@ -18,6 +18,11 @@ scenetest.html.
 Before you can use WebNaali you need to enable the websocket server
 module in tundra:
 
+ 0. The websocket server module uses the eventlet library - you need
+ to install it first either to your system Python (given it's a
+ matching version to the one embedded in Tundra) or to your Tundra
+ pymodules dir. http://eventlet.net/
+
  1. Create a file called "websocket.ini" (the file can be of any name
  as long as it has the .ini suffix) or modify the default.ini file in
  the pymodules directory.
