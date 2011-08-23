@@ -47,6 +47,7 @@ function Entity(id) {
 	    this.mesh.docURL = "/";
 	    this.mesh.setScale(0.1);
 	    this.mesh.setRotY(3 * Math.PI / 2);
+	    this.mesh.setFrames(1);
 	    scene.addCollada(this.mesh);
 	}
     }
