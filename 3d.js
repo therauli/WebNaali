@@ -43,6 +43,7 @@ function initGraffa() {
     var static_scene = new GLGE.Collada();
     static_scene.setDocument(url_to_static);
     static_scene.docURL = "/";
+    static_scene.setRot(0, 0, 0);
     scene.addCollada(static_scene);
 
     keys = new GLGE.KeyInput();

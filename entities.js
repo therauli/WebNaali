@@ -37,7 +37,8 @@ function Entity(id) {
 	this.componentName = 'EC_Avatar';
 	this.parent = params['id'];
 
-	this.url = "http://localhost:8000/man_mesh+armature_2.5.dae";
+	//this.url = "http://localhost:8000/man_mesh+armature_2.5.dae";
+	this.url = "http://www.realxtend.org/webnaali/avatar/man_mesh%2Barmature_2.5.dae";
 
 	if (this.url) {
 	    this.mesh = new GLGE.Collada();
@@ -132,20 +133,20 @@ function setAttr(params) {
 			var y = transform[2];
 			var z = -transform[1];
 			var rotx = transform[3] * Math.PI / 180;
-			var roty = transform[5] * Math.PI / 180;
-			var rotz = -transform[4] * Math.PI / 180;
+			var roty = transform[4] * Math.PI / 180;
+			var rotz = transform[5] * Math.PI / 180;
 			
 			collada.setLocX(x);
 			collada.setLocY(y);
 			collada.setLocZ(z);
-			collada.setRotX(rotx - Math.PI / 2);
-			collada.setRotY(roty + 3 * Math.PI / 2);
-			collada.setRotZ(rotz);
+			collada.setRotX(rotx + 3 * Math.PI / 2);
+    			collada.setRotY(roty);
+			collada.setRotZ(rotz - 3 * Math.PI / 2);
 
 			if (id == myid) {
 			    // sync Camera
 			    camera.setLoc(x, y + 1.5, z);
-			    camera.setRot(rotx, roty + 3 * Math.PI / 2, rotz);
+			    camera.setRot(rotx, rotz - Math.PI / 2, roty);
 			}
 		    }
 		}
