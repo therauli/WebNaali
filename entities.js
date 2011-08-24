@@ -35,10 +35,10 @@ function Entity(id) {
 
     Components.EC_Avatar = function(params) {
 	this.componentName = 'EC_Avatar';
-	this.parent = params['id'];
+	var id = params['id'];
+	this.parent = id;
 
-	//this.url = "http://localhost:8000/man_mesh+armature_2.5.dae";
-	this.url = "http://www.realxtend.org/webnaali/avatar/man_mesh%2Barmature_2.5.dae";
+	this.url = "http://localhost:8000/man_mesh+armature_2.5.dae";
 
 	if (this.url) {
 	    this.mesh = new GLGE.Collada();
@@ -47,8 +47,19 @@ function Entity(id) {
 	    this.mesh.docURL = "/";
 	    this.mesh.setScale(0.1);
 	    this.mesh.setRotY(3 * Math.PI / 2);
-	    this.mesh.setFrames(1);
 	    scene.addCollada(this.mesh);
+	    // For some reason setting the animation frames is not
+	    //executed immidiately so we delay execution a bit
+	    window.setTimeout(function() {
+		var components = entities[id].components;
+		for (i = 0; i < components.length; i++) {
+		    if (components[i].componentName == "EC_Avatar") {
+			components[i]['mesh'].setFrames(1)
+			break;
+		    }
+		}		
+	    }, 100);
+	    
 	}
     }
     
